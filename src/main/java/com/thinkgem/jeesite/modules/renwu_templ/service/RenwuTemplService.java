@@ -5,6 +5,7 @@ package com.thinkgem.jeesite.modules.renwu_templ.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,9 @@ import com.thinkgem.jeesite.modules.renwu_templ.dao.RenwuTemplDao;
 @Transactional(readOnly = true)
 public class RenwuTemplService extends TreeService<RenwuTemplDao, RenwuTempl> {
 
+	@Autowired
+	private RenwuTemplDao dao;
+	
 	public RenwuTempl get(String id) {
 		return super.get(id);
 	}
@@ -43,5 +47,13 @@ public class RenwuTemplService extends TreeService<RenwuTemplDao, RenwuTempl> {
 	public void delete(RenwuTempl renwuTempl) {
 		super.delete(renwuTempl);
 	}
-	
+	@Transactional(readOnly = false)
+	public void startTask(RenwuTempl renwuTempl) {
+		dao.startTask(renwuTempl.getId());
+		dao.startTask2(renwuTempl.getId());
+	}
+	@Transactional(readOnly = false)
+	public void saveStartTask(RenwuTempl renwuTempl) {
+		dao.saveStartTask(renwuTempl);
+	}
 }

@@ -3,12 +3,15 @@
  */
 package com.thinkgem.jeesite.modules.renwu_templ.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.Length;
-import com.thinkgem.jeesite.modules.sys.entity.Office;
+import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.thinkgem.jeesite.common.persistence.TreeEntity;
+import com.thinkgem.jeesite.modules.sys.entity.Office;
 
 /**
  * 任务计划模板Entity
@@ -22,8 +25,11 @@ public class RenwuTempl extends TreeEntity<RenwuTempl> {
 	private String parentIds;		// 所有父级编号
 	private String mingcheng;		// 名称
 	private Integer taskcycle;		// 任务周期
+	private Date jieshusj;	//任务结束时间
 	private Office taskdep;		// 任务部门
 	private String yuangongcode;		// 执行员工号
+	private String taskStatus;	//任务状态，0未执行，1执行中
+	private String taskStatusText;	//启动or查看
 	
 	public RenwuTempl() {
 		super();
@@ -89,4 +95,29 @@ public class RenwuTempl extends TreeEntity<RenwuTempl> {
 	public String getParentId() {
 		return parent != null && parent.getId() != null ? parent.getId() : "0";
 	}
+
+	public String getTaskStatus() {
+		return taskStatus;
+	}
+
+	public void setTaskStatus(String taskStatus) {
+		this.taskStatus = taskStatus;
+	}
+
+	public String getTaskStatusText() {
+		return taskStatusText;
+	}
+
+	public void setTaskStatusText(String taskStatusText) {
+		this.taskStatusText = taskStatusText;
+	}
+
+	public Date getJieshusj() {
+		return jieshusj;
+	}
+
+	public void setJieshusj(Date jieshusj) {
+		this.jieshusj = jieshusj;
+	}
+
 }

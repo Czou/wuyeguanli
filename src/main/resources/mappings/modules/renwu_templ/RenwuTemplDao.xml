@@ -11,6 +11,8 @@
 		a.taskcycle AS "taskcycle",
 		a.taskdep AS "taskdep.id",
 		a.yuangongcode AS "yuangongcode",
+		a.taskStatus AS "taskStatus",
+		a.jieshusj AS "jieshusj",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
@@ -142,7 +144,23 @@
 	<update id="delete">
 		UPDATE renwu_templ SET 
 			del_flag = #{DEL_FLAG_DELETE}
-		WHERE id = #{id} OR parent_ids LIKE '%,'||#{id}||',%'
+		WHERE id = #{id} OR parent_ids LIKE concat('%',#{id},'%')
 	</update>
 	
+	<insert id="startTask">
+		INSERT INTO renwu_run 
+		select * from renwu_templ 
+		WHERE id=#{id} OR parent_ids LIKE concat('0,',#{id},'%') 
+	</insert>
+	<update id="startTask2">
+		UPDATE renwu_templ SET 
+			taskStatus = 1
+		WHERE id = #{id} OR parent_ids LIKE concat('%',#{id},'%')
+	</update>
+	
+	<update id="saveStartTask">
+		UPDATE renwu_templ SET 
+			jieshusj = #{jieshusj}
+		WHERE id = #{id} OR parent_ids LIKE concat('%',#{id},'%')
+	</update>
 </mapper>

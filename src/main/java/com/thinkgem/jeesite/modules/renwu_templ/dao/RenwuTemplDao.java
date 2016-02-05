@@ -14,5 +14,18 @@ import com.thinkgem.jeesite.modules.renwu_templ.entity.RenwuTempl;
  */
 @MyBatisDao
 public interface RenwuTemplDao extends TreeDao<RenwuTempl> {
+
+	/**
+	 * 启动一个任务
+	 * @param id
+	 */
+	void startTask(String id);
+	void startTask2(String id);
 	
+	/**
+	 * 保存启动任务
+	 * @param renwu
+	 * @return
+	 */
+	public int saveStartTask(RenwuTempl renwu);
 }

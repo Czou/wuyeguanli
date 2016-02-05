@@ -122,4 +122,36 @@ public class RenwuTemplController extends BaseController {
 		return mapList;
 	}
 	
+	//可启动的任务列表
+	@RequiresPermissions("renwu_templ:renwuTempl:view")
+	@RequestMapping(value = "startTaskList")
+	public String startTaskList(RenwuTempl renwuTempl, HttpServletRequest request, HttpServletResponse response, Model model) {
+		List<RenwuTempl> list = renwuTemplService.findList(renwuTempl); 
+		for(RenwuTempl t:list){
+			if("0".equals(t.getTaskStatus())){
+				t.setTaskStatus("startTask");
+				t.setTaskStatusText("启动");
+			}else{
+				t.setTaskStatus("viewTask");
+				t.setTaskStatusText("查看");
+			}
+		}
+		model.addAttribute("list", list);
+		return "modules/renwu_templ/renwuTemplList2";
+	}
+	//启动任务
+	@RequiresPermissions("renwu_templ:renwuTempl:view")
+	@RequestMapping(value = "startTask")
+	public String startTask(RenwuTempl renwuTempl, Model model) {
+		renwuTemplService.startTask(renwuTempl);
+		return "modules/renwu_templ/renwuTemplForm2";
+	}
+	//保存启动任务
+	@RequiresPermissions("renwu_templ:renwuTempl:edit")
+	@RequestMapping(value = "saveStartTask")
+	public String saveStartTask(RenwuTempl renwuTempl, Model model, RedirectAttributes redirectAttributes) {
+		renwuTemplService.saveStartTask(renwuTempl);
+		addMessage(redirectAttributes, "任务启动成功");
+		return "redirect:"+Global.getAdminPath()+"/renwu_templ/renwuTempl/startTaskList?repage";
+	}
 }
