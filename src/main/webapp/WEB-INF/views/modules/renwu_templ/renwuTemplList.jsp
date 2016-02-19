@@ -62,7 +62,7 @@
 		<thead>
 			<tr>
 				<th>名称</th>
-				<th>任务周期</th>
+				<th>任务周期(天)</th>
 				<th>任务部门</th>
 				<shiro:hasPermission name="renwu_templ:renwuTempl:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
@@ -83,7 +83,7 @@
 			<shiro:hasPermission name="renwu_templ:renwuTempl:edit"><td>
    				<a href="${ctx}/renwu_templ/renwuTempl/form?id={{row.id}}">修改</a>
 				<a href="${ctx}/renwu_templ/renwuTempl/delete?id={{row.id}}" onclick="return confirmx('确认要删除该计划及所有子计划吗？', this.href)">删除</a>
-				<a href="${ctx}/renwu_templ/renwuTempl/form?parent.id={{row.id}}">添加下级计划</a> 
+				<a href="${ctx}/renwu_templ/renwuTempl/form?parent.id={{row.id}}">{{row.taskStatusText}}</a>
 			</td></shiro:hasPermission>
 		</tr>
 	</script>

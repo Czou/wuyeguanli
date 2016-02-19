@@ -20,12 +20,5 @@ public interface RenwuTemplDao extends TreeDao<RenwuTempl> {
 	 * @param id
 	 */
 	void startTask(String id);
-	void startTask2(String id);
-	
-	/**
-	 * 保存启动任务
-	 * @param renwu
-	 * @return
-	 */
 	public int saveStartTask(RenwuTempl renwu);
 }

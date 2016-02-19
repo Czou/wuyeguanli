@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.renwu_run_jilu.dao.RenwuRunJiluDao">
+    
+	<sql id="renwuRunJiluColumns">
+		a.id AS "id",
+		a.renwuid AS "renwu.id",
+		r.mingcheng AS "renwu.mingcheng",
+		a.remarks AS "remarks",
+		a.wanchengqk AS "wanchengqk",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="renwuRunJiluJoins">
+		LEFT JOIN renwu_run r ON r.renwuId=a.id
+	</sql>
+    
+	<select id="get" resultType="RenwuRunJilu">
+		SELECT 
+			<include refid="renwuRunJiluColumns"/>
+		FROM renwu_run_jilu a
+		<include refid="renwuRunJiluJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RenwuRunJilu">
+		SELECT 
+			<include refid="renwuRunJiluColumns"/>
+		FROM renwu_run_jilu a
+		<include refid="renwuRunJiluJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="renwu != null and renwu.id != null and renwu.id != ''">
+				AND a.renwuid LIKE 
+					<if test="dbName == 'oracle'">'%'||#{renwu.id}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{renwu.id}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{renwu.id},'%')</if>
+			</if>
+			<if test="wanchengqk != null and wanchengqk != ''">
+				AND a.wanchengqk = #{wanchengqk}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RenwuRunJilu">
+		SELECT 
+			<include refid="renwuRunJiluColumns"/>
+		FROM renwu_run_jilu a
+		<include refid="renwuRunJiluJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO renwu_run_jilu(
+			id,
+			renwuid,
+			remarks,
+			wanchengqk,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag
+		) VALUES (
+			#{id},
+			#{renwu.id},
+			#{remarks},
+			#{wanchengqk},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE renwu_run_jilu SET 	
+			renwuid = #{renwu.id},
+			remarks = #{remarks},
+			wanchengqk = #{wanchengqk},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE renwu_run_jilu SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

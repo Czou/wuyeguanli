@@ -34,9 +34,9 @@
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
-			<label class="control-label">货物条码：</label>
+			<label class="control-label">收货人电话：</label>
 			<div class="controls">
-				<form:input path="huowutm" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
+				<form:input path="shouhuodh" htmlEscape="false" maxlength="15" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -44,13 +44,6 @@
 			<label class="control-label">收货人姓名：</label>
 			<div class="controls">
 				<form:input path="shouhuoxm" htmlEscape="false" maxlength="10" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">收货人电话：</label>
-			<div class="controls">
-				<form:input path="shouhuodh" htmlEscape="false" maxlength="15" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>

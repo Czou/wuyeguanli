@@ -32,14 +32,9 @@
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="renwuTempl" action="${ctx}/renwu_templ/renwuTempl/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
+		<input type="hidden" name="parent.id" value="${renwuTempl.parent.id}">
+		
 		<sys:message content="${message}"/>		
-		<div class="control-group">
-			<label class="control-label">上级父级编号:</label>
-			<div class="controls">
-				<sys:treeselect id="parent" name="parent.id" value="${renwuTempl.parent.id}" labelName="parent.mingcheng" labelValue="${renwuTempl.parent.mingcheng}"
-					title="父级编号" url="/renwu_templ/renwuTempl/treeData" extId="${renwuTempl.id}" cssClass="" allowClear="true"/>
-			</div>
-		</div>
 		<div class="control-group">
 			<label class="control-label">名称：</label>
 			<div class="controls">
@@ -50,7 +45,7 @@
 		<div class="control-group">
 			<label class="control-label">任务周期：</label>
 			<div class="controls">
-				<form:input path="taskcycle" htmlEscape="false" maxlength="5" class="input-xlarge  digits"/>
+				<form:input path="taskcycle" htmlEscape="false" maxlength="5" class="input-xlarge  digits"/> 天
 			</div>
 		</div>
 		<div class="control-group">

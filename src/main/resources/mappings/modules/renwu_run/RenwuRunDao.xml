@@ -1,46 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.thinkgem.jeesite.modules.renwu_templ.dao.RenwuTemplDao">
+<mapper namespace="com.thinkgem.jeesite.modules.renwu_run.dao.RenwuRunDao">
     
-	<sql id="renwuTemplColumns">
+	<sql id="renwuRunColumns">
 		a.id AS "id",
 		a.parent_id AS "parent.id",
+		p.mingcheng AS "parent.mingcheng",
 		a.parent_ids AS "parentIds",
 		a.mingcheng AS "mingcheng",
-		a.mingcheng AS "name",
 		a.taskcycle AS "taskcycle",
-		a.taskdep AS "taskdep.id",
+		a.taskdep AS "office.id",
+		o.name AS "office.name",
 		a.yuangongcode AS "yuangongcode",
-		a.taskStatus AS "taskStatus",
+		a.taskstatus AS "taskstatus",
 		a.jieshusj AS "jieshusj",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
-		a.del_flag AS "delFlag",
-		o6.name AS "taskdep.name"
+		a.del_flag AS "delFlag"
 	</sql>
 	
-	<sql id="renwuTemplJoins">
-		LEFT JOIN sys_office o6 ON o6.id = a.taskdep
-		JOIN sys_user u ON u.id = a.create_by
-		JOIN sys_office o ON o.id = u.office_id
+	<sql id="renwuRunJoins">
+		LEFT JOIN renwu_run p ON a.parent_id=p.id
+		LEFT JOIN sys_office o ON o.id=a.taskDep
 	</sql>
     
-	<select id="get" resultType="RenwuTempl">
+	<select id="get" resultType="RenwuRun">
 		SELECT 
-			<include refid="renwuTemplColumns"/>
-		FROM renwu_templ a
-		<include refid="renwuTemplJoins"/>
+			<include refid="renwuRunColumns"/>
+		FROM renwu_run a
+		<include refid="renwuRunJoins"/>
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="RenwuTempl">
+	<select id="findList" resultType="RenwuRun">
 		SELECT 
-			<include refid="renwuTemplColumns"/>
-		FROM renwu_templ a
-		<include refid="renwuTemplJoins"/>
+			<include refid="renwuRunColumns"/>
+		FROM renwu_run a
+		<include refid="renwuRunJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="parent != null and parent.id != null and parent.id != ''">
@@ -52,36 +51,27 @@
 					<if test="dbName == 'mssql'">'%'+#{parentIds}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{parentIds},'%')</if>
 			</if>
-			<if test="mingcheng != null and mingcheng != ''">
-				AND a.mingcheng LIKE 
-					<if test="dbName == 'oracle'">'%'||#{mingcheng}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{mingcheng}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{mingcheng},'%')</if>
-			</if>
-			<if test="taskdep != null and taskdep.id != null and taskdep.id != ''">
-				AND a.taskdep = #{taskdep.id}
-			</if>
 			${sqlMap.dsf}
 		</where>
 	</select>
 	
-	<select id="findAllList" resultType="RenwuTempl">
+	<select id="findAllList" resultType="RenwuRun">
 		SELECT 
-			<include refid="renwuTemplColumns"/>
-		FROM renwu_templ a
-		<include refid="renwuTemplJoins"/>
+			<include refid="renwuRunColumns"/>
+		FROM renwu_run a
+		<include refid="renwuRunJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 		</where>
 	</select>
 	
-	<select id="findByParentIdsLike" resultType="RenwuTempl">
+	<select id="findByParentIdsLike" resultType="RenwuRun">
 		SELECT
 			a.id,
 			a.parent_id AS "parent.id",
 			a.parent_ids
-		FROM renwu_templ a
-		<include refid="renwuTemplJoins"/>
+		FROM renwu_run a
+		<include refid="renwuRunJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			AND a.parent_ids LIKE #{parentIds}
@@ -89,7 +79,7 @@
 	</select>
 	
 	<insert id="insert">
-		INSERT INTO renwu_templ(
+		INSERT INTO renwu_run(
 			id,
 			parent_id,
 			parent_ids,
@@ -97,6 +87,8 @@
 			taskcycle,
 			taskdep,
 			yuangongcode,
+			taskstatus,
+			jieshusj,
 			create_by,
 			create_date,
 			update_by,
@@ -109,8 +101,10 @@
 			#{parentIds},
 			#{mingcheng},
 			#{taskcycle},
-			#{taskdep.id},
+			#{office.id},
 			#{yuangongcode},
+			0,
+			#{jieshusj},
 			#{createBy.id},
 			#{createDate},
 			#{updateBy.id},
@@ -121,30 +115,25 @@
 	</insert>
 	
 	<update id="update">
-		UPDATE renwu_templ SET 	
-			parent_id = #{parent.id},
-			parent_ids = #{parentIds},
-			mingcheng = #{mingcheng},
-			taskcycle = #{taskcycle},
-			taskdep = #{taskdep.id},
-			yuangongcode = #{yuangongcode},
+		UPDATE renwu_run SET 	
+			taskstatus = #{taskstatus},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks}
-		WHERE id = #{id}
+		WHERE id = #{id} AND taskstatus=0
 	</update>
 	
 	<update id="updateParentIds">
-		UPDATE renwu_templ SET 
+		UPDATE renwu_run SET 
 			parent_id = #{parent.id}, 
 			parent_ids = #{parentIds}
 		WHERE id = #{id}
 	</update>
 	
 	<update id="delete">
-		UPDATE renwu_templ SET 
+		UPDATE renwu_run SET 
 			del_flag = #{DEL_FLAG_DELETE}
-		WHERE id = #{id} OR parent_ids LIKE concat('%',#{id},'%')
+		WHERE id = #{id} OR parent_ids LIKE '%,'||#{id}||',%'
 	</update>
 	
 </mapper>

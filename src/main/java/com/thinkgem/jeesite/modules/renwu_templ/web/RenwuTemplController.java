@@ -55,6 +55,11 @@ public class RenwuTemplController extends BaseController {
 	@RequestMapping(value = {"list", ""})
 	public String list(RenwuTempl renwuTempl, HttpServletRequest request, HttpServletResponse response, Model model) {
 		List<RenwuTempl> list = renwuTemplService.findList(renwuTempl); 
+		for(RenwuTempl tp:list){
+			if(tp.getParentId().equals("0")){
+				tp.setTaskStatusText("添加计划明细");
+			}
+		}
 		model.addAttribute("list", list);
 		return "modules/renwu_templ/renwuTemplList";
 	}
@@ -82,6 +87,31 @@ public class RenwuTemplController extends BaseController {
 		}
 		model.addAttribute("renwuTempl", renwuTempl);
 		return "modules/renwu_templ/renwuTemplForm";
+	}
+	//加载任务准备执行
+	@RequiresPermissions("renwu_templ:renwuTempl:view")
+	@RequestMapping(value = "loadTask")
+	public String loadTask(RenwuTempl renwuTempl, Model model) {
+		if (renwuTempl.getParent()!=null && StringUtils.isNotBlank(renwuTempl.getParent().getId())){
+			renwuTempl.setParent(renwuTemplService.get(renwuTempl.getParent().getId()));
+			// 获取排序号，最末节点排序号+30
+			if (StringUtils.isBlank(renwuTempl.getId())){
+				RenwuTempl renwuTemplChild = new RenwuTempl();
+				renwuTemplChild.setParent(new RenwuTempl(renwuTempl.getParent().getId()));
+				List<RenwuTempl> list = renwuTemplService.findList(renwuTempl); 
+				if (list.size() > 0){
+					renwuTempl.setSort(list.get(list.size()-1).getSort());
+					if (renwuTempl.getSort() != null){
+						renwuTempl.setSort(renwuTempl.getSort() + 30);
+					}
+				}
+			}
+		}
+		if (renwuTempl.getSort() == null){
+			renwuTempl.setSort(30);
+		}
+		model.addAttribute("renwuTempl", renwuTempl);
+		return "modules/renwu_templ/renwuTemplForm2";
 	}
 
 	@RequiresPermissions("renwu_templ:renwuTempl:edit")
@@ -139,14 +169,8 @@ public class RenwuTemplController extends BaseController {
 		model.addAttribute("list", list);
 		return "modules/renwu_templ/renwuTemplList2";
 	}
-	//启动任务
-	@RequiresPermissions("renwu_templ:renwuTempl:view")
-	@RequestMapping(value = "startTask")
-	public String startTask(RenwuTempl renwuTempl, Model model) {
-		renwuTemplService.startTask(renwuTempl);
-		return "modules/renwu_templ/renwuTemplForm2";
-	}
-	//保存启动任务
+	
+	//启动一项任务
 	@RequiresPermissions("renwu_templ:renwuTempl:edit")
 	@RequestMapping(value = "saveStartTask")
 	public String saveStartTask(RenwuTempl renwuTempl, Model model, RedirectAttributes redirectAttributes) {
@@ -154,4 +178,5 @@ public class RenwuTemplController extends BaseController {
 		addMessage(redirectAttributes, "任务启动成功");
 		return "redirect:"+Global.getAdminPath()+"/renwu_templ/renwuTempl/startTaskList?repage";
 	}
+	
 }

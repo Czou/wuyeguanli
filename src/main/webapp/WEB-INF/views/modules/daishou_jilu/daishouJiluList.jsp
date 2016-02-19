@@ -45,11 +45,9 @@
 				<th>收货人姓名</th>
 				<th>收货人电话</th>
 				<th>收货人地址</th>
-				<th>存放时间</th>
 				<th>物流公司</th>
 				<th>货柜</th>
-				<th>货物条码</th>
-				<th>取货二维码</th>
+				<th>取货码</th>
 				<shiro:hasPermission name="daishou_jilu:daishouJilu:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -66,23 +64,19 @@
 					${daishouJilu.shouhuodz}
 				</td>
 				<td>
-					<fmt:formatDate value="${daishouJilu.cunfangsj}" pattern="yyyy-MM-dd"/>
-				</td>
-				<td>
 					${daishouJilu.wuliugs.mingcheng}
 				</td>
 				<td>
 					${daishouJilu.huogui.mingcheng}
 				</td>
 				<td>
-					${daishouJilu.huowutm}
-				</td>
-				<td>
-					<a target="_blank" href="${pageContext.request.contextPath}/userfiles/${daishouJilu.id }.jpg">查看</a>
+					<!-- a target="_blank" href="${pageContext.request.contextPath}/userfiles/${daishouJilu.id }.jpg">查看</a-->
+					<fmt:formatDate value="${daishouJilu.createDate }" pattern="yyyyMMdd-HHmmss"/>
 				</td>
 				<shiro:hasPermission name="daishou_jilu:daishouJilu:edit"><td>
     				<a href="${ctx}/daishou_jilu/daishouJilu/form?id=${daishouJilu.id}">修改</a>
 					<a href="${ctx}/daishou_jilu/daishouJilu/delete?id=${daishouJilu.id}" onclick="return confirmx('确认要删除该信息吗？', this.href)">删除</a>
+					<a href="${ctx}/daishou_jilu/daishouJilu/quhuo?id=${daishouJilu.id}" onclick="return confirmx('确认要取货吗？', this.href)">取货</a>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>
