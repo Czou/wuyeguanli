@@ -42,7 +42,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/renwu_templ/renwuTempl/">计划列表</a></li>
-		<shiro:hasPermission name="renwu_templ:renwuTempl:edit"><li><a href="${ctx}/renwu_templ/renwuTempl/form">计划添加</a></li></shiro:hasPermission>
+		
 	</ul>
 	<form:form id="searchForm" modelAttribute="renwuTempl" action="${ctx}/renwu_templ/renwuTempl/" method="post" class="breadcrumb form-search">
 		<ul class="ul-form">

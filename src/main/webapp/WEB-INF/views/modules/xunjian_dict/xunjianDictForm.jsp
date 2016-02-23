@@ -34,15 +34,15 @@
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
-			<label class="control-label">巡检地点：</label>
+			<label class="control-label">巡检任务名称：</label>
 			<div class="controls">
-				<form:input path="mingcheng" htmlEscape="false" maxlength="60" class="input-xlarge "/>
+				<form:input path="leixing" htmlEscape="false" maxlength="255" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">巡检名称：</label>
+			<label class="control-label">巡检地点：</label>
 			<div class="controls">
-				<form:input path="leixing" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+				<form:input path="mingcheng" htmlEscape="false" maxlength="60" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">

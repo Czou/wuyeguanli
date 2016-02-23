@@ -1,53 +1,49 @@
 /**
  * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
-package com.thinkgem.jeesite.modules.renwu_run.entity;
+package com.thinkgem.jeesite.modules.renwu_linshi.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
+import com.thinkgem.jeesite.modules.sys.entity.User;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import com.thinkgem.jeesite.common.persistence.TreeEntity;
-import com.thinkgem.jeesite.modules.sys.entity.Office;
-import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
- * 任务执行Entity
+ * 临时任务Entity
  * @author ktzhxm
- * @version 2016-02-09
+ * @version 2016-02-22
  */
-public class RenwuRun extends TreeEntity<RenwuRun> {
+public class RenwuLinshi extends DataEntity<RenwuLinshi> {
 	
 	private static final long serialVersionUID = 1L;
-	private RenwuRun parent;		// 父级编号
+	private String parent_id;		// 父级编号
 	private String parentIds;		// 所有父级编号
 	private String mingcheng;		// 名称
 	private String taskcycle;		// 任务周期
-	private Office office;		// 任务部门
-	private User user;
+	private String taskdep;		// 任务部门
+	private User taskuser;		// 任务责任人
+	private Integer taskType;	//任务类型
 	private String yuangongcode;		// 执行员工号
-	private String taskstatus;		// taskstatus
-	private Date jieshusj;		// jieshusj
-	private String taskText;	//任务链接文本
+	private String taskstatus="0";		// taskstatus
+	private Date jieshusj;		// 结束时间
 	
-	public RenwuRun() {
+	public RenwuLinshi() {
 		super();
 	}
 
-	public RenwuRun(String id){
+	public RenwuLinshi(String id){
 		super(id);
 	}
 
-	@JsonBackReference
-	@NotNull(message="父级编号不能为空")
-	public RenwuRun getParent() {
-		return parent;
+	@Length(min=1, max=64, message="父级编号长度必须介于 1 和 64 之间")
+	public String getParent_id() {
+		return parent_id;
 	}
 
-	public void setParent(RenwuRun parent) {
-		this.parent = parent;
+	public void setParent_id(String parent_id) {
+		this.parent_id = parent_id;
 	}
 	
 	@Length(min=1, max=2000, message="所有父级编号长度必须介于 1 和 2000 之间")
@@ -77,6 +73,23 @@ public class RenwuRun extends TreeEntity<RenwuRun> {
 		this.taskcycle = taskcycle;
 	}
 	
+	@Length(min=0, max=64, message="任务部门长度必须介于 0 和 64 之间")
+	public String getTaskdep() {
+		return taskdep;
+	}
+
+	public void setTaskdep(String taskdep) {
+		this.taskdep = taskdep;
+	}
+	
+	public User getTaskuser() {
+		return taskuser;
+	}
+
+	public void setTaskuser(User taskuser) {
+		this.taskuser = taskuser;
+	}
+	
 	@Length(min=0, max=64, message="执行员工号长度必须介于 0 和 64 之间")
 	public String getYuangongcode() {
 		return yuangongcode;
@@ -95,7 +108,7 @@ public class RenwuRun extends TreeEntity<RenwuRun> {
 		this.taskstatus = taskstatus;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date getJieshusj() {
 		return jieshusj;
 	}
@@ -103,32 +116,13 @@ public class RenwuRun extends TreeEntity<RenwuRun> {
 	public void setJieshusj(Date jieshusj) {
 		this.jieshusj = jieshusj;
 	}
+
+	public Integer getTaskType() {
+		return taskType;
+	}
+
+	public void setTaskType(Integer taskType) {
+		this.taskType = taskType;
+	}
 	
-	public String getParentId() {
-		return parent != null && parent.getId() != null ? parent.getId() : "0";
-	}
-
-	public Office getOffice() {
-		return office;
-	}
-
-	public void setOffice(Office office) {
-		this.office = office;
-	}
-
-	public String getTaskText() {
-		return taskText;
-	}
-
-	public void setTaskText(String taskText) {
-		this.taskText = taskText;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
 }

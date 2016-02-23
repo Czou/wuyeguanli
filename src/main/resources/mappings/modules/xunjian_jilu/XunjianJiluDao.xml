@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.xunjian_jilu.dao.XunjianJiluDao">
+    
+	<sql id="xunjianJiluColumns">
+		a.id AS "id",
+		a.xunjianid AS "xunjianid",
+		a.xunjianstatus AS "xunjianstatus",
+		a.userId AS "userId.id",
+		a.jieshusj AS "jieshusj",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="xunjianJiluJoins">
+	</sql>
+    
+	<select id="get" resultType="XunjianJilu">
+		SELECT 
+			<include refid="xunjianJiluColumns"/>
+		FROM xunjian_jilu a
+		<include refid="xunjianJiluJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="XunjianJilu">
+		SELECT 
+			<include refid="xunjianJiluColumns"/>
+		FROM xunjian_jilu a
+		<include refid="xunjianJiluJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="xunjianid != null and xunjianid != ''">
+				AND a.xunjianid LIKE 
+					<if test="dbName == 'oracle'">'%'||#{xunjianid}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{xunjianid}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{xunjianid},'%')</if>
+			</if>
+			<if test="remarks != null and remarks != ''">
+				AND a.remarks LIKE 
+					<if test="dbName == 'oracle'">'%'||#{remarks}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{remarks}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{remarks},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="XunjianJilu">
+		SELECT 
+			<include refid="xunjianJiluColumns"/>
+		FROM xunjian_jilu a
+		<include refid="xunjianJiluJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO xunjian_jilu(
+			id,
+			xunjianid,
+			xunjianstatus,
+			jieshusj,
+			userId,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{xunjianid},
+			#{xunjianstatus},
+			#{jieshusj},
+			#{userId.id},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE xunjian_jilu SET 	
+			xunjianid = #{xunjianid},
+			xunjianstatus = #{xunjianstatus},
+			jieshusj = #{jieshusj},
+			userId=#{userId.id},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE xunjian_jilu SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

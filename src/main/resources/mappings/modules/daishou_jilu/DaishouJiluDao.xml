@@ -18,7 +18,6 @@
 		b.mingcheng AS "wuliugs.mingcheng",
 		c.id AS "huogui.id",
 		c.mingcheng AS "huogui.mingcheng",
-		a.huowutm AS "huowutm",
 		a.quhuoewm AS "quhuoewm",
 		a.quhuoxm AS "quhuoxm",
 		a.quhuodh AS "quhuodh",
@@ -96,7 +95,6 @@
 			cunfangsj,
 			wuliugs,
 			huoguiid,
-			huowutm,
 			status
 		) VALUES (
 			#{id},
@@ -112,7 +110,6 @@
 			#{cunfangsj},
 			#{wuliugs.id},
 			#{huogui.id},
-			#{huowutm},
 			0
 		)
 	</insert>
@@ -128,7 +125,6 @@
 			cunfangsj = #{cunfangsj},
 			wuliugs = #{wuliugs.id},
 			huoguiid = #{huogui.id},
-			huowutm = #{huowutm},
 			quhuoewm = #{quhuoewm},
 			quhuoxm = #{quhuoxm},
 			quhuodh = #{quhuodh},

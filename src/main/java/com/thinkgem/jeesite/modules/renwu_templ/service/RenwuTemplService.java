@@ -60,6 +60,7 @@ public class RenwuTemplService extends TreeService<RenwuTemplDao, RenwuTempl> {
 		run.setTaskcycle(templ.getTaskcycle());
 		run.setOffice(templ.getTaskdep());
 		run.setYuangongcode(templ.getYuangongcode());
+		run.setUser(templ.getTaskUser());
 		run.setJieshusj(templ.getJieshusj());
 		run.preInsert();
 		runDao.insert(run);
@@ -75,6 +76,7 @@ public class RenwuTemplService extends TreeService<RenwuTemplDao, RenwuTempl> {
 			run1.setTaskcycle(rl.getTaskcycle());
 			run1.setOffice(rl.getTaskdep());
 			run1.setYuangongcode(rl.getYuangongcode());
+			run1.setUser(templ.getTaskUser());
 			run1.setJieshusj(templ.getJieshusj());
 			run1.setParentIds("0,"+run.getId());
 

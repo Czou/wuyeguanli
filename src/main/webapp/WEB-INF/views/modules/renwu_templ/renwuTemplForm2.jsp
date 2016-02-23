@@ -27,7 +27,7 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/renwu_templ/renwuTempl/">计划列表</a></li>
+		<li><a href="${ctx}/renwu_templ/renwuTempl/startTaskList">计划列表</a></li>
 		<li class="active"><a href="${ctx}/renwu_templ/renwuTempl/form?id=${renwuTempl.id}&parent.id=${renwuTemplparent.id}">计划<shiro:hasPermission name="renwu_templ:renwuTempl:edit">${not empty renwuTempl.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="renwu_templ:renwuTempl:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="renwuTempl" action="${ctx}/renwu_templ/renwuTempl/saveStartTask" method="post" class="form-horizontal">

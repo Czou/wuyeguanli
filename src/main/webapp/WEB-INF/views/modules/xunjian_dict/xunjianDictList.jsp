@@ -22,14 +22,14 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>巡检地点：</label>
-				<form:input path="mingcheng" htmlEscape="false" maxlength="60" class="input-medium"/>
-			</li>
-			<li><label>巡检名称：</label>
+			<li><label>巡检任务：</label>
 				<form:select id="leixing" path="leixing" class="input-medium">
 					<form:option value="" label=""/>
 					<form:options items="${leixingList}" htmlEscape="false"/>
 				</form:select>
+			</li>
+			<li><label>巡检地点：</label>
+				<form:input path="mingcheng" htmlEscape="false" maxlength="60" class="input-medium"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
@@ -39,8 +39,8 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
+				<th>巡检任务</th>
 				<th>巡检地点</th>
-				<th>巡检名称</th>
 				<th>顺序</th>
 				<shiro:hasPermission name="xunjian_dict:xunjianDict:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
@@ -48,12 +48,12 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="xunjianDict">
 			<tr>
+				<td>
+					<a href="${ctx}/xunjian_jilu/xunjianJilu/form?xunjianid=${xunjianDict.leixing}">${xunjianDict.leixing}</a>
+				</td>
 				<td><a href="${ctx}/xunjian_dict/xunjianDict/form?id=${xunjianDict.id}">
 					${xunjianDict.mingcheng}
 				</a></td>
-				<td>
-					${xunjianDict.leixing}
-				</td>
 				<td>
 					${xunjianDict.shunxu}
 				</td>

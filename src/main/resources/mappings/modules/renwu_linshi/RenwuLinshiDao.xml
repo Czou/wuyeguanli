@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.renwu_linshi.dao.RenwuLinshiDao">
+    
+	<sql id="renwuLinshiColumns">
+		a.id AS "id",
+		a.parent_id AS "parent_id",
+		a.parent_ids AS "parentIds",
+		a.mingcheng AS "mingcheng",
+		a.taskcycle AS "taskcycle",
+		a.taskdep AS "taskdep",
+		a.taskuser AS "taskuser.id",
+		a.yuangongcode AS "yuangongcode",
+		a.taskstatus AS "taskstatus",
+		a.jieshusj AS "jieshusj",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		u7.name AS "taskuser.name"
+	</sql>
+	
+	<sql id="renwuLinshiJoins">
+		LEFT JOIN sys_user u7 ON u7.id = a.taskuser
+	</sql>
+    
+	<select id="get" resultType="RenwuLinshi">
+		SELECT 
+			<include refid="renwuLinshiColumns"/>
+		FROM renwu_run a
+		<include refid="renwuLinshiJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RenwuLinshi">
+		SELECT 
+			<include refid="renwuLinshiColumns"/>
+		FROM renwu_run a
+		<include refid="renwuLinshiJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="mingcheng != null and mingcheng != ''">
+				AND a.mingcheng LIKE 
+					<if test="dbName == 'oracle'">'%'||#{mingcheng}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{mingcheng}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{mingcheng},'%')</if>
+			</if>
+			AND a.taskType=2
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RenwuLinshi">
+		SELECT 
+			<include refid="renwuLinshiColumns"/>
+		FROM renwu_run a
+		<include refid="renwuLinshiJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO renwu_run(
+			id,
+			parent_id,
+			parent_ids,
+			mingcheng,
+			taskcycle,
+			taskdep,
+			taskuser,
+			taskType,
+			yuangongcode,
+			taskstatus,
+			jieshusj,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{parent_id},
+			#{parentIds},
+			#{mingcheng},
+			#{taskcycle},
+			#{taskdep},
+			#{taskuser.id},
+			2,
+			#{yuangongcode},
+			#{taskstatus},
+			#{jieshusj},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE renwu_run SET 	
+			mingcheng = #{mingcheng},
+			taskcycle = #{taskcycle},
+			taskdep = #{taskdep},
+			taskuser = #{taskuser.id},
+			yuangongcode = #{yuangongcode},
+			taskstatus = #{taskstatus},
+			jieshusj = #{jieshusj},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE renwu_run SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

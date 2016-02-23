@@ -41,7 +41,7 @@
 		FROM renwu_run a
 		<include refid="renwuRunJoins"/>
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
+			a.del_flag = #{DEL_FLAG_NORMAL} AND a.taskType=1
 			<if test="parent != null and parent.id != null and parent.id != ''">
 				AND a.parent_id = #{parent.id}
 			</if>
@@ -86,6 +86,7 @@
 			mingcheng,
 			taskcycle,
 			taskdep,
+			taskUser,
 			yuangongcode,
 			taskstatus,
 			jieshusj,
@@ -102,6 +103,7 @@
 			#{mingcheng},
 			#{taskcycle},
 			#{office.id},
+			#{user.id},
 			#{yuangongcode},
 			0,
 			#{jieshusj},
@@ -117,6 +119,7 @@
 	<update id="update">
 		UPDATE renwu_run SET 	
 			taskstatus = #{taskstatus},
+			taskUser = #{user.id},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks}
