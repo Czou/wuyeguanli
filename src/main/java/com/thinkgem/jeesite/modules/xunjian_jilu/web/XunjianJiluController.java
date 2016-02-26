@@ -17,8 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
-import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.xunjian_jilu.entity.XunjianJilu;
 import com.thinkgem.jeesite.modules.xunjian_jilu.service.XunjianJiluService;
 
@@ -64,9 +64,6 @@ public class XunjianJiluController extends BaseController {
 	@RequiresPermissions("xunjian_jilu:xunjianJilu:edit")
 	@RequestMapping(value = "save")
 	public String save(XunjianJilu xunjianJilu, Model model, RedirectAttributes redirectAttributes) {
-		if (!beanValidator(model, xunjianJilu)){
-			return form(xunjianJilu, model);
-		}
 		xunjianJiluService.save(xunjianJilu);
 		addMessage(redirectAttributes, "保存巡检成功");
 		return "redirect:"+Global.getAdminPath()+"/xunjian_jilu/xunjianJilu/?repage";

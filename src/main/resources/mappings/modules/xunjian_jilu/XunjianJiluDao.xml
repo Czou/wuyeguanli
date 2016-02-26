@@ -4,19 +4,25 @@
     
 	<sql id="xunjianJiluColumns">
 		a.id AS "id",
-		a.xunjianid AS "xunjianid",
+		a.xunjianid AS "xunjian.id",
+		d.leixing AS "xunjian.leixing",
+		d.mingcheng AS "xunjian.mingcheng",
 		a.xunjianstatus AS "xunjianstatus",
 		a.userId AS "userId.id",
+		a.xunjiansj AS "xunjiansj",
 		a.jieshusj AS "jieshusj",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
+		u.name AS "updateBy.name",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag"
 	</sql>
 	
 	<sql id="xunjianJiluJoins">
+		LEFT JOIN xunjian_dict AS d ON a.xunjianId=d.id
+		LEFT JOIN sys_user AS u ON u.id=a.userId
 	</sql>
     
 	<select id="get" resultType="XunjianJilu">
@@ -34,11 +40,11 @@
 		<include refid="xunjianJiluJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="xunjianid != null and xunjianid != ''">
-				AND a.xunjianid LIKE 
-					<if test="dbName == 'oracle'">'%'||#{xunjianid}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{xunjianid}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{xunjianid},'%')</if>
+			<if test="xunjian != null and xunjian != ''">
+				AND d.leixing LIKE 
+					<if test="dbName == 'oracle'">'%'||#{xunjian.leixing}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{xunjian.leixing}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{xunjian.leixing},'%')</if>
 			</if>
 			<if test="remarks != null and remarks != ''">
 				AND a.remarks LIKE 
@@ -79,6 +85,7 @@
 		INSERT INTO xunjian_jilu(
 			id,
 			xunjianid,
+			shunxu,
 			xunjianstatus,
 			jieshusj,
 			userId,
@@ -90,7 +97,8 @@
 			del_flag
 		) VALUES (
 			#{id},
-			#{xunjianid},
+			#{xunjian.id},
+			#{xunjian.shunxu},
 			#{xunjianstatus},
 			#{jieshusj},
 			#{userId.id},
@@ -105,7 +113,7 @@
 	
 	<update id="update">
 		UPDATE xunjian_jilu SET 	
-			xunjianid = #{xunjianid},
+			xunjianid = #{xunjian.id},
 			xunjianstatus = #{xunjianstatus},
 			jieshusj = #{jieshusj},
 			userId=#{userId.id},

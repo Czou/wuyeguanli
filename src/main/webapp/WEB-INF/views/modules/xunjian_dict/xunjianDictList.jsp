@@ -49,7 +49,7 @@
 		<c:forEach items="${page.list}" var="xunjianDict">
 			<tr>
 				<td>
-					<a href="${ctx}/xunjian_jilu/xunjianJilu/form?xunjianid=${xunjianDict.leixing}">${xunjianDict.leixing}</a>
+					<a href="${ctx}/xunjian_jilu/xunjianJilu/form?xunjian.leixing=${xunjianDict.leixing}">${xunjianDict.leixing}</a>
 				</td>
 				<td><a href="${ctx}/xunjian_dict/xunjianDict/form?id=${xunjianDict.id}">
 					${xunjianDict.mingcheng}

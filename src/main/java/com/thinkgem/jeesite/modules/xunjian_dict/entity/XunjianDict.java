@@ -17,7 +17,7 @@ public class XunjianDict extends DataEntity<XunjianDict> {
 	private static final long serialVersionUID = 1L;
 	private String mingcheng;		// 名称
 	private String leixing;		// 类型
-	private String shunxu;		// 顺序
+	private Integer shunxu;		// 顺序
 	
 	public XunjianDict() {
 		super();
@@ -45,11 +45,11 @@ public class XunjianDict extends DataEntity<XunjianDict> {
 		this.leixing = leixing;
 	}
 
-	public String getShunxu() {
+	public Integer getShunxu() {
 		return shunxu;
 	}
 
-	public void setShunxu(String shunxu) {
+	public void setShunxu(Integer shunxu) {
 		this.shunxu = shunxu;
 	}
 }

@@ -32,12 +32,12 @@
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="xunjianJilu" action="${ctx}/xunjian_jilu/xunjianJilu/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
-		<form:hidden path="xunjianid"/>
+		<form:hidden path="xunjian.leixing"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
 			<label class="control-label">巡检任务名：</label>
 			<div class="controls">
-				${xunjianJilu.xunjianid}
+				${xunjianJilu.xunjian.leixing}
 			</div>
 		</div>
 		<div class="control-group">

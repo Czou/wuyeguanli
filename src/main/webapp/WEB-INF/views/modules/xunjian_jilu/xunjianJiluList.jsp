@@ -24,10 +24,10 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>任务id：</label>
-				<form:input path="xunjianid" htmlEscape="false" maxlength="60" class="input-medium"/>
+			<li><label>任务名称：</label>
+				<form:input path="xunjian.leixing" htmlEscape="false" maxlength="60" class="input-medium"/>
 			</li>
-			<li><label>巡检备注：</label>
+			<li><label>备注：</label>
 				<form:input path="remarks" htmlEscape="false" maxlength="255" class="input-medium"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
@@ -38,36 +38,35 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>任务id</th>
+				<th>任务名称</th>
+				<th>巡检地点</th>
+				<th>巡检人</th>
+				<th>巡检时间</th>
 				<th>巡检状态</th>
-				<th>更新者</th>
-				<th>update_date</th>
-				<th>巡检备注</th>
-				<shiro:hasPermission name="xunjian_jilu:xunjianJilu:edit"><th>操作</th></shiro:hasPermission>
+				<th>备注</th>
 			</tr>
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="xunjianJilu">
 			<tr>
 				<td>
-					${xunjianJilu.xunjianid}
+					${xunjianJilu.xunjian.leixing}
 				</td>
 				<td>
-					${xunjianJilu.xunjianstatus}
+					${xunjianJilu.xunjian.mingcheng}
 				</td>
 				<td>
-					${xunjianJilu.updateBy.id}
+					${xunjianJilu.updateBy.name}
 				</td>
 				<td>
-					<fmt:formatDate value="${xunjianJilu.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${xunjianJilu.xunjiansj}" pattern="yyyy-MM-dd HH:mm:ss" />
+				</td>
+				<td>
+					${xunjianJilu.xunjianstatus==0?'<font color="red">×</font>':'<font color="green">√</font>'}
 				</td>
 				<td>
 					${xunjianJilu.remarks}
 				</td>
-				<shiro:hasPermission name="xunjian_jilu:xunjianJilu:edit"><td>
-    				<a href="${ctx}/xunjian_jilu/xunjianJilu/form?id=${xunjianJilu.id}">修改</a>
-					<a href="${ctx}/xunjian_jilu/xunjianJilu/delete?id=${xunjianJilu.id}" onclick="return confirmx('确认要删除该巡检吗？', this.href)">删除</a>
-				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>
 		</tbody>

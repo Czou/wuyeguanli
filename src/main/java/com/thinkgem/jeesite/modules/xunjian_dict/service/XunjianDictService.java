@@ -18,9 +18,8 @@ import com.google.zxing.common.BitMatrix;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
 import com.thinkgem.jeesite.common.utils.MatrixToImageWriter;
-import com.thinkgem.jeesite.modules.xunjian_dict.entity.XunjianDict;
-import com.thinkgem.jeesite.modules.daishou_jilu.service.DaishouJiluService;
 import com.thinkgem.jeesite.modules.xunjian_dict.dao.XunjianDictDao;
+import com.thinkgem.jeesite.modules.xunjian_dict.entity.XunjianDict;
 
 /**
  * 管理巡检点Service
