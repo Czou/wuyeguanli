@@ -96,5 +96,23 @@ public class DaishouJiluController extends BaseController {
 		addMessage(redirectAttributes, "删除信息成功");
 		return "redirect:"+Global.getAdminPath()+"/daishou_jilu/daishouJilu/?repage";
 	}
-
+	@RequiresPermissions("daishou_jilu:daishouJilu:view")
+	@RequestMapping(value = "quhuo")
+	public String quhuo(DaishouJilu daishouJilu, Model model) {
+		model.addAttribute("huoguiList",daishouJilu);
+		return "modules/daishou_jilu/daishouJiluQuhuo";
+	}
+	@RequiresPermissions("daishou_jilu:daishouJilu:edit")
+	@RequestMapping(value = "saveQuhuo")
+	public String saveQuhuo(DaishouJilu daishouJilu, Model model, RedirectAttributes redirectAttributes) {
+		daishouJiluService.quhuo(daishouJilu);
+		addMessage(redirectAttributes, "取货成功");
+		return "redirect:"+Global.getAdminPath()+"/daishou_jilu/daishouJilu/?repage";
+	}
+	@RequiresPermissions("daishou_jilu:daishouJilu:view")
+	@RequestMapping(value = "chakan")
+	public String chakan(DaishouJilu daishouJilu, Model model) {
+		model.addAttribute("huoguiList",daishouJilu);
+		return "modules/daishou_jilu/daishouJiluChakan";
+	}
 }

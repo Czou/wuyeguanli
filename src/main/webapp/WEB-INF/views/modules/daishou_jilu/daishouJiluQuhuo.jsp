@@ -30,60 +30,70 @@
 		<li><a href="${ctx}/daishou_jilu/daishouJilu/">信息列表</a></li>
 		<li class="active"><a href="${ctx}/daishou_jilu/daishouJilu/form?id=${daishouJilu.id}">信息<shiro:hasPermission name="daishou_jilu:daishouJilu:edit">${not empty daishouJilu.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="daishou_jilu:daishouJilu:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
-	<form:form id="inputForm" modelAttribute="daishouJilu" action="${ctx}/daishou_jilu/daishouJilu/save" method="post" class="form-horizontal">
+	<form:form id="inputForm" modelAttribute="daishouJilu" action="${ctx}/daishou_jilu/daishouJilu/saveQuhuo" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
 			<label class="control-label">货物名称：</label>
 			<div class="controls">
-				<form:input path="mingcheng" htmlEscape="false" maxlength="15" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				${daishouJilu.mingcheng}
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">收货人电话：</label>
 			<div class="controls">
-				<form:input path="shouhuodh" htmlEscape="false" maxlength="15" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				${daishouJilu.shouhuodh}
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">收货人姓名：</label>
 			<div class="controls">
-				<form:input path="shouhuoxm" htmlEscape="false" maxlength="10" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				${daishouJilu.shouhuoxm}
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">收货人地址：</label>
 			<div class="controls">
-				<form:input path="shouhuodz" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+				${daishouJilu.shouhuodz}
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">存放时间：</label>
 			<div class="controls">
-				<input name="cunfangsj" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
-					value="<fmt:formatDate value="${daishouJilu.cunfangsj}" pattern="yyyy-MM-dd"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+				<fmt:formatDate value="${daishouJilu.cunfangsj }" pattern="yyyy-MM-dd"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">物流公司：</label>
 			<div class="controls">
-				<form:select path="wuliugs.id" items="${wuliuList }" itemLabel="mingcheng" itemValue="id" class="input-xlarge "></form:select>
+				${daishouJilu.wuliugs.mingcheng}
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">货柜：</label>
 			<div class="controls">
-				<form:select path="huogui.id" items="${huoguiList }" itemLabel="mingcheng" itemValue="id" class="input-xlarge "></form:select>
+				${daishouJilu.huogui.mingcheng}
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">备注：</label>
+			<label class="control-label">是否本人取货：</label>
 			<div class="controls">
-				<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255" class="input-xxlarge "/>
+				<input type="radio" name="shifoubr" value="1" checked="checked">是&nbsp;&nbsp;
+				<input type="radio" name="shifoubr" value="0">否
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">取货人电话：</label>
+			<div class="controls">
+				<form:input path="quhuodh" htmlEscape="false" maxlength="15" class="input-xlarge"/>
+				<span class="help-inline"><font color="green">本人取货不必填写</font> </span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">取货人姓名：</label>
+			<div class="controls">
+				<form:input path="quhuoxm" htmlEscape="false" maxlength="10" class="input-xlarge"/>
+				<span class="help-inline"><font color="green">本人取货不必填写</font> </span>
 			</div>
 		</div>
 		<div class="form-actions">

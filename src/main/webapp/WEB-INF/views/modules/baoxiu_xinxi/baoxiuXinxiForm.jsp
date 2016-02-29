@@ -65,9 +65,9 @@
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
-			<label class="control-label">标题：</label>
+			<label class="control-label">概要：</label>
 			<div class="controls">
-				<form:input path="mingcheng" htmlEscape="false" maxlength="60" class="input-xlarge required"/>
+				<form:input path="mingcheng" htmlEscape="false" maxlength="15" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -101,7 +101,7 @@
 		<div class="control-group">
 			<label class="control-label">维修员：</label>
 			<div class="controls">
-				<form:select path="weixiuy.id" class="input-xlarge "></form:select>
+				<form:select path="weixiuy.id" class="input-xlarge " items="${weixiuList }" itemLabel="renyuanid.name" itemValue="renyuanid.id" ></form:select>
 			</div>
 		</div>
 		<script type="text/javascript">

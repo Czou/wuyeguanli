@@ -66,9 +66,11 @@
 		<div class="control-group">
 			<label class="control-label">维修人员：</label>
 			<div class="controls">
-				<form:select path="renyuanid.id" items="${weixiuList }" itemLabel="name" itemValue="id" class="input-xlarge "></form:select>
+				<sys:treeselect id="taskuser" name="renyuanid.id" value="${renyuanid.id}" labelName="renyuanid.name" labelValue="${baoxiuPaiban.renyuanid.name}"
+					title="用户" url="/sys/office/treeData?type=3" cssClass="" allowClear="true" notAllowSelectParent="true"/>
 			</div>
 		</div>
+		
 		<div class="control-group">
 			<label class="control-label">值班日期：</label>
 			<div class="controls">

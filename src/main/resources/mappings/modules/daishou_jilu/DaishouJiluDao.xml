@@ -10,6 +10,7 @@
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
+		a.mingcheng AS "mingcheng",
 		a.shouhuoxm AS "shouhuoxm",
 		a.shouhuodh AS "shouhuodh",
 		a.shouhuodz AS "shouhuodz",
@@ -45,8 +46,17 @@
 		<include refid="daishouJiluJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="mingcheng != null and mingcheng != ''">
+				AND a.mingcheng LIKE 
+					<if test="dbName == 'oracle'">'%'||#{mingcheng}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{mingcheng}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{mingcheng},'%')</if>
+			</if>
 			<if test="shouhuoxm != null and shouhuoxm != ''">
-				AND a.shouhuoxm = #{shouhuoxm}
+				AND a.shouhuoxm LIKE 
+					<if test="dbName == 'oracle'">'%'||#{shouhuoxm}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{shouhuoxm}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{shouhuoxm},'%')</if>
 			</if>
 			<if test="wuliugs != null and wuliugs.id != null and wuliugs.id != ''">
 				AND a.wuliugs = #{wuliugs.id}
@@ -89,6 +99,7 @@
 			update_date,
 			remarks,
 			del_flag,
+			mingcheng,
 			shouhuoxm,
 			shouhuodh,
 			shouhuodz,
@@ -104,6 +115,7 @@
 			#{updateDate},
 			#{remarks},
 			#{delFlag},
+			#{mingcheng},
 			#{shouhuoxm},
 			#{shouhuodh},
 			#{shouhuodz},
@@ -119,6 +131,7 @@
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks},
+			mingcheng = #{mingcheng},
 			shouhuoxm = #{shouhuoxm},
 			shouhuodh = #{shouhuodh},
 			shouhuodz = #{shouhuodz},
@@ -130,6 +143,17 @@
 			quhuodh = #{quhuodh},
 			quhuosj = #{quhuosj},
 			status = #{status}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="quhuo">
+		UPDATE daishou_jilu SET 	
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			quhuoxm = #{quhuoxm},
+			quhuodh = #{quhuodh},
+			quhuosj = #{quhuosj},
+			status = 1
 		WHERE id = #{id}
 	</update>
 	

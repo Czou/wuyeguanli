@@ -19,6 +19,7 @@ import com.thinkgem.jeesite.modules.daishou_wuliu.entity.DaishouWuliugs;
 public class DaishouJilu extends DataEntity<DaishouJilu> {
 	
 	private static final long serialVersionUID = 1L;
+	private String mingcheng;		//货物名称
 	private String shouhuoxm;		// 收货人姓名
 	private String shouhuodh;		// 收货人电话
 	private String shouhuodz;		// 收货人地址
@@ -27,6 +28,7 @@ public class DaishouJilu extends DataEntity<DaishouJilu> {
 	private DaishouHuogui huogui;		// 货柜
 	private String huowutm;		// 货物条码
 	private String quhuoewm;		// 取货二维码
+	private String shifoubr;		//是否本人取货
 	private String quhuoxm;		// 取货人姓名
 	private String quhuodh;		// 取货人电话
 	private Date quhuosj;		// 取货时间
@@ -141,6 +143,22 @@ public class DaishouJilu extends DataEntity<DaishouJilu> {
 
 	public void setHuogui(DaishouHuogui huogui) {
 		this.huogui = huogui;
+	}
+
+	public String getMingcheng() {
+		return mingcheng;
+	}
+
+	public void setMingcheng(String mingcheng) {
+		this.mingcheng = mingcheng;
+	}
+
+	public String getShifoubr() {
+		return shifoubr;
+	}
+
+	public void setShifoubr(String shifoubr) {
+		this.shifoubr = shifoubr;
 	}
 	
 }

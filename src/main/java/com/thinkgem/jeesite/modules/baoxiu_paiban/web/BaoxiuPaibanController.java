@@ -60,7 +60,7 @@ public class BaoxiuPaibanController extends BaseController {
 	@RequiresPermissions("baoxiu_paiban:baoxiuPaiban:view")
 	@RequestMapping(value = "form")
 	public String form(BaoxiuPaiban baoxiuPaiban, Model model) {
-		model.addAttribute("weixiuList", baoxiuPaibanService.loadWeixiuyuan());
+//		model.addAttribute("weixiuList", baoxiuPaibanService.loadWeixiuyuan());
 		model.addAttribute("baoxiuPaiban", baoxiuPaiban);
 		return "modules/baoxiu_paiban/baoxiuPaibanForm";
 	}

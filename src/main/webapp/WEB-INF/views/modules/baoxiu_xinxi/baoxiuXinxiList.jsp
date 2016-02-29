@@ -25,7 +25,7 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>标题：</label>
+			<li><label>概要：</label>
 				<form:input path="mingcheng" htmlEscape="false" maxlength="60" class="input-medium"/>
 			</li>
 			<li><label>状态：</label>
@@ -42,7 +42,7 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>标题</th>
+				<th>概要</th>
 				<th>位置</th>
 				<th>报修区域</th>
 				<th>报修电话</th>

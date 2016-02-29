@@ -3,6 +3,8 @@
  */
 package com.thinkgem.jeesite.modules.baoxiu_xinxi.web;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -67,6 +69,8 @@ public class BaoxiuXinxiController extends BaseController {
 	@RequiresPermissions("baoxiu_xinxi:baoxiuXinxi:view")
 	@RequestMapping(value = "form")
 	public String form(BaoxiuXinxi baoxiuXinxi, Model model) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		model.addAttribute("weixiuList",baoxiuXinxiService.loadWeixiu(sdf.format(new Date())));
 		model.addAttribute("baoxiuXinxi", baoxiuXinxi);
 		return "modules/baoxiu_xinxi/baoxiuXinxiForm";
 	}

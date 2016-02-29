@@ -14,5 +14,5 @@ import com.thinkgem.jeesite.modules.daishou_jilu.entity.DaishouJilu;
  */
 @MyBatisDao
 public interface DaishouJiluDao extends CrudDao<DaishouJilu> {
-	
+	public void quhuo(DaishouJilu jilu);
 }

@@ -5,9 +5,6 @@
 	<title>信息管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
-		$(document).ready(function() {
-			
-		});
 		function page(n,s){
 			$("#pageNo").val(n);
 			$("#pageSize").val(s);
@@ -25,6 +22,9 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
+			<li><label>货物名称：</label>
+				<form:input path="mingcheng" htmlEscape="false" maxlength="10" class="input-medium"/>
+			</li>
 			<li><label>收货人姓名：</label>
 				<form:input path="shouhuoxm" htmlEscape="false" maxlength="10" class="input-medium"/>
 			</li>
@@ -42,6 +42,7 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
+				<th>货物名称</th>
 				<th>收货人姓名</th>
 				<th>收货人电话</th>
 				<th>收货人地址</th>
@@ -55,8 +56,11 @@
 		<c:forEach items="${page.list}" var="daishouJilu">
 			<tr>
 				<td><a href="${ctx}/daishou_jilu/daishouJilu/form?id=${daishouJilu.id}">
-					${daishouJilu.shouhuoxm}
+					${daishouJilu.mingcheng}
 				</a></td>
+				<td>
+					${daishouJilu.shouhuoxm}
+				</td>
 				<td>
 					${daishouJilu.shouhuodh}
 				</td>
@@ -76,7 +80,12 @@
 				<shiro:hasPermission name="daishou_jilu:daishouJilu:edit"><td>
     				<a href="${ctx}/daishou_jilu/daishouJilu/form?id=${daishouJilu.id}">修改</a>
 					<a href="${ctx}/daishou_jilu/daishouJilu/delete?id=${daishouJilu.id}" onclick="return confirmx('确认要删除该信息吗？', this.href)">删除</a>
-					<a href="${ctx}/daishou_jilu/daishouJilu/quhuo?id=${daishouJilu.id}" onclick="return confirmx('确认要取货吗？', this.href)">取货</a>
+					<c:if test="${daishouJilu.status==0}">
+					<a href="${ctx}/daishou_jilu/daishouJilu/quhuo?id=${daishouJilu.id}">取货</a>
+					</c:if>
+					<c:if test="${daishouJilu.status==1}">
+					<a href="${ctx}/daishou_jilu/daishouJilu/chakan?id=${daishouJilu.id}">查看</a>
+					</c:if>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>

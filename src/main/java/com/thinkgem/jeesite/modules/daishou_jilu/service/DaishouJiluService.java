@@ -3,21 +3,14 @@
  */
 package com.thinkgem.jeesite.modules.daishou_jilu.service;
 
-import java.io.File;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.common.BitMatrix;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
-import com.thinkgem.jeesite.common.utils.MatrixToImageWriter;
 import com.thinkgem.jeesite.modules.daishou_jilu.dao.DaishouJiluDao;
 import com.thinkgem.jeesite.modules.daishou_jilu.entity.DaishouJilu;
 
@@ -45,7 +38,7 @@ public class DaishouJiluService extends CrudService<DaishouJiluDao, DaishouJilu>
 	@Transactional(readOnly = false)
 	public void save(DaishouJilu daishouJilu) {
 		super.save(daishouJilu);
-		
+		/*
 		String str=DaishouJiluService.class.getResource("/").getFile();
 		String path=new File(str).getParentFile().getParentFile().getPath();
 		//生成二维码文件
@@ -59,11 +52,16 @@ public class DaishouJiluService extends CrudService<DaishouJiluDao, DaishouJilu>
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		*/
 	}
 	
 	@Transactional(readOnly = false)
 	public void delete(DaishouJilu daishouJilu) {
 		super.delete(daishouJilu);
 	}
-	
+	@Transactional(readOnly = false)
+	public void quhuo(DaishouJilu daishouJilu) {
+		daishouJilu.setQuhuosj(new Date());
+		dao.quhuo(daishouJilu);
+	}
 }
