@@ -5,12 +5,12 @@ package com.thinkgem.jeesite.modules.wuyerenyuan.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
+import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.wuyerenyuan.dao.DictRenyuanDao;
 import com.thinkgem.jeesite.modules.wuyerenyuan.entity.DictRenyuan;
 
@@ -21,46 +21,44 @@ import com.thinkgem.jeesite.modules.wuyerenyuan.entity.DictRenyuan;
  */
 @Service
 @Transactional(readOnly = true)
-public class DictRenyuanService extends CrudService<DictRenyuanDao, DictRenyuan> {
-	@Autowired
-	private DictRenyuanDao renyuanDao;
+public class DictRenyuanService extends CrudService<DictRenyuanDao, User> {
 	
-	public DictRenyuan get(String id) {
+	public User get(String id) {
 		return super.get(id);
 	}
 	
-	public List<DictRenyuan> findList(DictRenyuan dictRenyuan) {
-		return super.findList(dictRenyuan);
+	public List<User> findList(User user) {
+		return super.findList(user);
 	}
 	
-	public Page<DictRenyuan> findPage(Page<DictRenyuan> page, DictRenyuan dictRenyuan) {
+	public Page<User> findPage(Page<User> page, User dictRenyuan) {
 		return super.findPage(page, dictRenyuan);
 	}
 	
 	@Transactional(readOnly = false)
-	public void save(DictRenyuan dictRenyuan) {
+	public void save(User dictRenyuan) {
 		super.save(dictRenyuan);
 	}
 	
 	@Transactional(readOnly = false)
-	public void delete(DictRenyuan dictRenyuan) {
+	public void delete(User dictRenyuan) {
 		super.delete(dictRenyuan);
 	}
 	@Transactional(readOnly = false)
 	public void moveOut(String renyuanId) {
-		renyuanDao.moveOut(renyuanId);
+		dao.moveOut(renyuanId);
 	}
 	@Transactional(readOnly = false)
 	public void addHeimingd(String renyuanId) {
-		renyuanDao.addHeimingd(renyuanId);
+		dao.addHeimingd(renyuanId);
 	}
 	@Transactional(readOnly = false)
 	public void delHeimingd(String renyuanId) {
-		renyuanDao.delHeimingd(renyuanId);
+		dao.delHeimingd(renyuanId);
 	}
 
 	public DictRenyuan getRenyuanByNum(String num) {
-		return renyuanDao.getRenyuanByNum(num);
+		return dao.getRenyuanByNum(num);
 	}
 	
 }

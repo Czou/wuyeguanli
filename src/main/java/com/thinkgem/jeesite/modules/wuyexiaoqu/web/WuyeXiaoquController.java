@@ -60,9 +60,8 @@ public class WuyeXiaoquController extends BaseController {
 	@RequiresPermissions("wuyexiaoqu:wuyeXiaoqu:view")
 	@RequestMapping(value = "form")
 	public String form(WuyeXiaoqu wuyeXiaoqu, Model model) {
-		WuyeJiben jiben = new WuyeJiben();
-		jiben.setDelFlag("0");
-		model.addAttribute("wuyeList",wuyeXiaoquService.findAllWuye(jiben));
+		//公司
+		model.addAttribute("officeList",wuyeXiaoquService.findAllWuye());
 		model.addAttribute("wuyeXiaoqu", wuyeXiaoqu);
 		return "modules/wuyexiaoqu/wuyeXiaoquForm";
 	}

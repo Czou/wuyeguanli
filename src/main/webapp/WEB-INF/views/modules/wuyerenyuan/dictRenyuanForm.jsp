@@ -33,31 +33,40 @@
 	<form:form id="inputForm" modelAttribute="dictRenyuan" action="${ctx}/wuyerenyuan/dictRenyuan/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>
-		<form:hidden path="pids"/>
+		<input type="hidden" name="office.id" value="0">
+		<input type="hidden" name="company.id" value="0">
+		<form:hidden path="taohuIds"/>
 		<div class="control-group">
 			<label class="control-label">姓名：</label>
 			<div class="controls">
-				<form:input path="xingming" htmlEscape="false" maxlength="12" class="input-xlarge required"/>
+				<form:input path="name" htmlEscape="false" maxlength="12" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">性别：</label>
 			<div class="controls">
-				<form:radiobuttons path="xingbie" items="${fns:getDictList('sex')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
+				<form:radiobuttons path="sex" items="${fns:getDictList('sex')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">身份证：</label>
 			<div class="controls">
-				<form:input path="shengfenz" htmlEscape="false" maxlength="18" class="input-xlarge required"/>
+				<form:input path="shenfenz" htmlEscape="false" maxlength="18" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">人员类型：</label>
 			<div class="controls">
-				<form:radiobuttons path="renyuanlx" items="${fns:getDictList('d_zhlx')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
+				<form:radiobuttons path="yezhulx" items="${fns:getDictList('d_zhlx')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">随身电话：</label>
+			<div class="controls">
+				<form:input path="mobile" htmlEscape="false" maxlength="18" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -68,22 +77,9 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">随身电话：</label>
-			<div class="controls">
-				<form:input path="suishendh" htmlEscape="false" maxlength="18" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
 			<label class="control-label">住宅电话：</label>
 			<div class="controls">
-				<form:input path="zhuzhaidh" htmlEscape="false" maxlength="18" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">单位电话：</label>
-			<div class="controls">
-				<form:input path="danweidh" htmlEscape="false" maxlength="18" class="input-xlarge "/>
+				<form:input path="phone" htmlEscape="false" maxlength="18" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -95,8 +91,8 @@
 		<div class="control-group">
 			<label class="control-label">照片：</label>
 			<div class="controls">
-				<form:hidden id="zhaopian" path="zhaopian" htmlEscape="false" maxlength="120" class="input-xlarge"/>
-				<sys:ckfinder input="zhaopian" type="files" uploadPath="/wuyerenyuan/dictRenyuan" selectMultiple="true"/>
+				<form:hidden id="photo" path="photo" htmlEscape="false" maxlength="120" class="input-xlarge"/>
+				<sys:ckfinder input="photo" type="files" uploadPath="/wuyerenyuan/dictRenyuan" selectMultiple="true"/>
 			</div>
 		</div>
 		<div class="control-group">

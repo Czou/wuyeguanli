@@ -2,21 +2,18 @@ package com.thinkgem.jeesite.modules.mobile;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.wuye_heimingd.entity.DictHeimingd;
 import com.thinkgem.jeesite.modules.wuye_heimingd.service.DictHeimingdService;
 import com.thinkgem.jeesite.modules.wuyejiben.entity.WuyeJiben;
 import com.thinkgem.jeesite.modules.wuyejiben.service.WuyeJibenService;
-import com.thinkgem.jeesite.modules.wuyerenyuan.entity.DictRenyuan;
 import com.thinkgem.jeesite.modules.wuyerenyuan.service.DictRenyuanService;
 import com.thinkgem.jeesite.modules.wuyexiaoqu.entity.WuyeXiaoqu;
 import com.thinkgem.jeesite.modules.wuyexiaoqu.service.WuyeXiaoquService;
@@ -79,8 +76,8 @@ public class PropertyController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "getRenyuanlist")
-	public String getRenyuanlist(HttpServletResponse response,DictRenyuan dictRenyuan){
-		List<DictRenyuan> list= dictRenyuanService.findList(dictRenyuan);
+	public String getRenyuanlist(HttpServletResponse response,User dictRenyuan){
+		List<User> list= dictRenyuanService.findList(dictRenyuan);
 		return renderString(response, list);
 	}
 	

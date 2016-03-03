@@ -4,19 +4,18 @@
     
 	<sql id="dictRenyuanColumns">
 		a.id AS "id",
-		a.xingming AS "xingming",
-		a.xingbie AS "xingbie",
-		a.shengfenz AS "shengfenz",
-		CONCAT(xiaoqu.mingcheng,'-',loudong.mingcheng,'-',danyuan.mingcheng,'-',taohu.mingcheng) AS "path",
-		a.heimingd AS "heimingd",
-		a.pids AS "pids",
-		a.renyuanlx AS "renyuanlx",
+		a.name AS "name",
+		a.sex AS "sex",
+		a.shenfenz AS "shenfenz",
+		CONCAT(loudong.mingcheng,'-',danyuan.mingcheng,'-',taohu.mingcheng) AS "path",
+		a.taohuIds AS "taohuIds",
+		a.yezhulx AS "yezhulx",
+		a.user_type AS "userType",
 		a.gongzuodw AS "gongzuodw",
-		a.zhuzhaidh AS "zhuzhaidh",
-		a.danweidh AS "danweidh",
-		a.suishendh AS "suishendh",
+		a.phone AS "phone",
+		a.mobile AS "mobile",
 		a.hukouszd AS "hukouszd",
-		a.zhaopian AS "zhaopian",
+		a.photo AS "photo",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
@@ -26,48 +25,44 @@
 	</sql>
 	
 	<sql id="dictRenyuanJoins">
-		LEFT JOIN wuye_jichu AS taohu ON a.pid=taohu.id
+		LEFT JOIN wuye_jichu AS taohu ON a.taohuId=taohu.id
 		LEFT JOIN wuye_jichu AS danyuan ON taohu.pid=danyuan.id
 		LEFT JOIN wuye_jichu AS loudong ON danyuan.pid=loudong.id
-		LEFT JOIN wuye_jichu AS xiaoqu ON loudong.pid=xiaoqu.id
 	</sql>
     
-	<select id="get" resultType="DictRenyuan">
+	<select id="get" resultType="User">
 		SELECT 
 			<include refid="dictRenyuanColumns"/>
-		FROM dict_renyuan a
+		FROM sys_user a
 		<include refid="dictRenyuanJoins"/>
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="DictRenyuan">
+	<select id="findList" resultType="User">
 		SELECT 
 			<include refid="dictRenyuanColumns"/>
-		FROM dict_renyuan a
+		FROM sys_user a
 		<include refid="dictRenyuanJoins"/>
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="xingming != null and xingming != ''">
-				AND a.xingming = #{xingming}
+			a.del_flag = #{DEL_FLAG_NORMAL} AND yezhulx>0
+			<if test="name != null and name != ''">
+				AND a.name = #{name}
 			</if>
-			<if test="renyuanlx != null and renyuanlx != ''">
-				AND a.renyuanlx = #{renyuanlx}
+			<if test="yezhulx != null and yezhulx != ''">
+				AND a.yezhulx = #{yezhulx}
 			</if>
-			<if test="suishendh != null and suishendh != ''">
-				AND a.suishendh = #{suishendh}
+			<if test="mobile != null and mobile != ''">
+				AND a.mobile = #{mobile}
 			</if>
-			<if test="pids != null and pids != ''">
-				AND (a.pids LIKE 
-					<if test="dbName == 'oracle'">'%'||#{pids}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{pids}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{pids},'%')</if>
+			<if test="taohuIds != null and taohuIds != ''">
+				AND (a.taohuIds LIKE 
+					<if test="dbName == 'oracle'">'%'||#{taohuIds}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{taohuIds}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{taohuIds},'%')</if>
 				OR a.id=#{id})
 			</if>
-			<if test="pid != null and pid != ''">
-				AND a.pid = #{pid}
-			</if>
-			<if test="heimingd != null and heimingd != ''">
-				AND a.heimingd = #{heimingd}
+			<if test="taohuId != null and taohuId != ''">
+				AND a.taohuId = #{taohuId}
 			</if>
 		</where>
 		<choose>
@@ -80,10 +75,10 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="DictRenyuan">
+	<select id="findAllList" resultType="User">
 		SELECT 
 			<include refid="dictRenyuanColumns"/>
-		FROM dict_renyuan a
+		FROM sys_user a
 		<include refid="dictRenyuanJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
@@ -98,71 +93,72 @@
 		</choose>
 	</select>
 	
-	<select id="getRenyuanByNum" resultType="DictRenyuan">
+	<select id="getRenyuanByNum" resultType="User">
 		SELECT 
-			id,xingming
-		FROM dict_renyuan a
+			id,name
+		FROM sys_user a
 		<where>
-			a.del_flag = 0 AND (shengfenz=#{num} OR suishendh=#{num})
+			a.del_flag = 0 AND (shenfenz=#{num} OR mobile=#{num})
 		</where>		
 	</select>
 	
 	<insert id="insert">
-		INSERT INTO dict_renyuan(
+		INSERT INTO sys_user(
 			id,
-			xingming,
-			xingbie,
-			shengfenz,
-			pid,
-			pids,
-			renyuanlx,
+			name,
+			sex,
+			shenfenz,
+			taohuId,
+			taohuIds,
+			yezhulx,
 			gongzuodw,
-			zhuzhaidh,
-			danweidh,
-			suishendh,
+			phone,
+			mobile,
 			hukouszd,
-			zhaopian,
+			photo,
 			create_by,
 			create_date,
 			update_by,
 			update_date,
 			remarks,
-			del_flag
+			del_flag,
+			company_id,
+			office_id
 		) VALUES (
 			#{id},
-			#{xingming},
-			#{xingbie},
-			#{shengfenz},
-			#{pid},
-			#{pids},
-			#{renyuanlx},
+			#{name},
+			#{sex},
+			#{shenfenz},
+			#{taohuId},
+			#{taohuIds},
+			#{yezhulx},
 			#{gongzuodw},
-			#{zhuzhaidh},
-			#{danweidh},
-			#{suishendh},
+			#{phone},
+			#{mobile},
 			#{hukouszd},
-			#{zhaopian},
+			#{photo},
 			#{createBy.id},
 			#{createDate},
 			#{updateBy.id},
 			#{updateDate},
 			#{remarks},
-			#{delFlag}
+			#{delFlag},
+			#{company.id},
+			#{office.id}
 		)
 	</insert>
 	
 	<update id="update">
-		UPDATE dict_renyuan SET 	
-			xingming = #{xingming},
-			xingbie = #{xingbie},
-			shengfenz = #{shengfenz},
-			renyuanlx = #{renyuanlx},
+		UPDATE sys_user SET 	
+			name = #{name},
+			sex = #{sex},
+			shenfenz = #{shenfenz},
+			yezhulx = #{yezhulx},
 			gongzuodw = #{gongzuodw},
-			zhuzhaidh = #{zhuzhaidh},
-			danweidh = #{danweidh},
-			suishendh = #{suishendh},
+			phone = #{phone},
+			mobile = #{mobile},
 			hukouszd = #{hukouszd},
-			zhaopian = #{zhaopian},
+			photo = #{photo},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks}
@@ -170,26 +166,26 @@
 	</update>
 	
 	<update id="delete">
-		UPDATE dict_renyuan SET 
+		UPDATE sys_user SET 
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
 	
 	<update id="moveOut">
-		UPDATE dict_renyuan SET
-		pid='',del_flag=1
+		UPDATE sys_user SET
+		taohuId='',del_flag=1
 		WHERE id=#{renyuanId}
 	</update>
 		
 	<update id="addHeimingd">
-		UPDATE dict_renyuan SET
-			heimingd=1
+		UPDATE sys_user SET
+			yezhulx=4
 		WHERE id=#{renyuanId}
 	</update>
 	
 	<update id="delHeimingd">
-		UPDATE dict_renyuan SET
-			heimingd=0
+		UPDATE sys_user SET
+			yezhulx=2
 		WHERE id=#{renyuanId}
 	</update>
 </mapper>

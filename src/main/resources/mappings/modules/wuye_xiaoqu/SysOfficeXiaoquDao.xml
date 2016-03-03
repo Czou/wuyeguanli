@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.wuye_xiaoqu.dao.SysOfficeXiaoquDao">
+    
+	<sql id="sysOfficeXiaoquColumns">
+		a.id AS "id",
+		a.parent_id AS "parent.id",
+		a.name AS "name",
+		a.sort AS "sort",
+		a.code AS "code",
+		a.type AS "type",
+		a.grade AS "grade",
+		a.address AS "address",
+		a.renshu AS "renshu",
+		a.zip_code AS "zipCode",
+		a.master AS "master.id",
+		b.name AS "master.name",
+		a.phone AS "phone",
+		a.fax AS "fax",
+		a.email AS "email",
+		a.useable AS "useable",
+		a.primary_person AS "primaryPerson",
+		a.deputy_person AS "deputyPerson",
+		a.loudongshu AS "loudongshu",
+		a.hushu AS "hushu",
+		a.create_by AS "createBy.id",
+		a.cheweishu AS "cheweishu",
+		a.jiansherq AS "jiansherq",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.jianzhupm AS "jianzhupm",
+		a.gonggongpm AS "gonggongpm",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.lvhuapm AS "lvhuapm",
+		a.del_flag AS "delFlag",
+		a.daolupm AS "daolupm",
+		a.chekupm AS "chekupm"
+	</sql>
+	
+	<sql id="sysOfficeXiaoquJoins">
+		LEFT JOIN sys_user b ON a.master=b.id
+	</sql>
+    
+	<select id="get" resultType="SysOfficeXiaoqu">
+		SELECT 
+			<include refid="sysOfficeXiaoquColumns"/>
+		FROM sys_office a
+		<include refid="sysOfficeXiaoquJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SysOfficeXiaoqu">
+		SELECT 
+			<include refid="sysOfficeXiaoquColumns"/>
+		FROM sys_office a
+		<include refid="sysOfficeXiaoquJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} AND a.type=1 AND a.parent_id!=0
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SysOfficeXiaoqu">
+		SELECT 
+			<include refid="sysOfficeXiaoquColumns"/>
+		FROM sys_office a
+		<include refid="sysOfficeXiaoquJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO sys_office(
+			id,
+			name,
+			parent_id,
+			area_id,
+			address,
+			renshu,
+			zip_code,
+			master,
+			phone,
+			fax,
+			email,
+			loudongshu,
+			hushu,
+			create_by,
+			cheweishu,
+			jiansherq,
+			create_date,
+			update_by,
+			jianzhupm,
+			gonggongpm,
+			update_date,
+			remarks,
+			lvhuapm,
+			del_flag,
+			daolupm,
+			chekupm
+		) VALUES (
+			#{id},
+			#{name},
+			#{parent.id},
+			0,
+			#{address},
+			#{renshu},
+			#{zipCode},
+			#{master.id},
+			#{phone},
+			#{fax},
+			#{email},
+			#{loudongshu},
+			#{hushu},
+			#{createBy.id},
+			#{cheweishu},
+			#{jiansherq},
+			#{createDate},
+			#{updateBy.id},
+			#{jianzhupm},
+			#{gonggongpm},
+			#{updateDate},
+			#{remarks},
+			#{lvhuapm},
+			#{delFlag},
+			#{daolupm},
+			#{chekupm}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE sys_office SET 	
+			name = #{name},
+			address = #{address},
+			renshu = #{renshu},
+			zip_code = #{zipCode},
+			master = #{master.id},
+			phone = #{phone},
+			fax = #{fax},
+			email = #{email},
+			loudongshu = #{loudongshu},
+			hushu = #{hushu},
+			cheweishu = #{cheweishu},
+			jiansherq = #{jiansherq},
+			update_by = #{updateBy.id},
+			jianzhupm = #{jianzhupm},
+			gonggongpm = #{gonggongpm},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			lvhuapm = #{lvhuapm},
+			daolupm = #{daolupm},
+			chekupm = #{chekupm}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE sys_office SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	<select id="findParList" resultType="Office">
+		SELECT 
+			id,name
+		FROM sys_office a
+		<where>
+			a.del_flag = 0 AND parent_id=0
+		</where>		
+	</select>
+</mapper>

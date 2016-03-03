@@ -21,7 +21,7 @@ public class JianyiXinxi extends DataEntity<JianyiXinxi> {
 	private String fenlei;		// 建议分类
 	private String fabu;		// 是否发布
 	private String zhuangtai;		// 建议状态
-	private String jieguo;		// 处理结果
+	private String jieguo="";		// 处理结果
 	
 	public JianyiXinxi() {
 		super();

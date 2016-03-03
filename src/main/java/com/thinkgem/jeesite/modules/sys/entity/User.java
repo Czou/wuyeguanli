@@ -44,6 +44,14 @@ public class User extends DataEntity<User> {
 	private Date loginDate;	// 最后登陆日期
 	private String loginFlag;	// 是否允许登陆
 	private String photo;	// 头像
+	
+	private String taohuId;	//套户id
+	private String taohuIds;	//套户ids
+	private String path;	//路径
+	private String shenfenz;//身份证
+	private String hukouszd;//户口所在地
+	private Integer yezhulx; //业主类型
+	private String gongzuodw; //工作单位
 
 	private String oldLoginName;// 原登录名
 	private String newPassword;	// 新密码
@@ -329,5 +337,61 @@ public class User extends DataEntity<User> {
 
 	public void setSex(String sex) {
 		this.sex = sex;
+	}
+
+	public String getTaohuIds() {
+		return taohuIds;
+	}
+
+	public void setTaohuIds(String taohuIds) {
+		this.taohuIds = taohuIds;
+	}
+
+	public String getTaohuId() {
+		return taohuId;
+	}
+
+	public void setTaohuId(String taohuId) {
+		this.taohuId = taohuId;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public String getShenfenz() {
+		return shenfenz;
+	}
+
+	public void setShenfenz(String shenfenz) {
+		this.shenfenz = shenfenz;
+	}
+
+	public String getHukouszd() {
+		return hukouszd;
+	}
+
+	public void setHukouszd(String hukouszd) {
+		this.hukouszd = hukouszd;
+	}
+
+	public Integer getYezhulx() {
+		return yezhulx;
+	}
+
+	public void setYezhulx(Integer yezhulx) {
+		this.yezhulx = yezhulx;
+	}
+
+	public String getGongzuodw() {
+		return gongzuodw;
+	}
+
+	public void setGongzuodw(String gongzuodw) {
+		this.gongzuodw = gongzuodw;
 	}
 }

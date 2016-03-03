@@ -11,10 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
-import com.thinkgem.jeesite.modules.wuyexiaoqu.entity.WuyeXiaoqu;
+import com.thinkgem.jeesite.modules.sys.entity.Office;
 import com.thinkgem.jeesite.modules.wuyejiben.dao.WuyeJibenDao;
 import com.thinkgem.jeesite.modules.wuyejiben.entity.WuyeJiben;
 import com.thinkgem.jeesite.modules.wuyexiaoqu.dao.WuyeXiaoquDao;
+import com.thinkgem.jeesite.modules.wuyexiaoqu.entity.WuyeXiaoqu;
 
 /**
  * 小区信息Service
@@ -27,17 +28,15 @@ public class WuyeXiaoquService extends CrudService<WuyeXiaoquDao, WuyeXiaoqu> {
 
 	@Autowired
 	private WuyeJibenDao jibenDao;
-	@Autowired
-	private WuyeXiaoquDao xiaoquDao;
 	public WuyeXiaoqu get(String id) {
 		return super.get(id);
 	}
-	public List<WuyeJiben> findAllWuye(WuyeJiben jiben){
-		return jibenDao.findAllList(jiben);
+	public List<Office> findAllWuye(){
+		return dao.findGongSi();
 	}
 	//找到一个物业下的所有小区
 	public List<WuyeXiaoqu> findListByPid(String pid){
-		return xiaoquDao.findListByPid(pid);
+		return dao.findListByPid(pid);
 	}
 	public List<WuyeXiaoqu> findList(WuyeXiaoqu wuyeXiaoqu) {
 		return super.findList(wuyeXiaoqu);

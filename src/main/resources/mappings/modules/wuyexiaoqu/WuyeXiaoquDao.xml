@@ -83,6 +83,16 @@
 			</otherwise>
 		</choose>
 	</select>
+	
+	<select id="findGongSi" resultType="Office">
+		SELECT 
+			id,name
+		FROM sys_office a
+		<where>
+			a.parent_id=0
+		</where>		
+	</select>
+	
 	<select id="findListByPid" resultType="WuyeXiaoqu">
 		SELECT 
 			a.id,a.mingcheng

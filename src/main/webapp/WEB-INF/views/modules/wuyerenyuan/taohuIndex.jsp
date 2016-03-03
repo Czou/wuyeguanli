@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>单元信息查看</title>
+	<title>套户信息</title>
 	<meta name="decorator" content="default"/>
 	<%@include file="/WEB-INF/views/include/treeview.jsp" %>
 	<style type="text/css">
@@ -14,7 +14,7 @@
 	<div id="content" class="row-fluid">
 		<div id="left" class="accordion-group">
 			<div class="accordion-heading">
-		    	<a class="accordion-toggle">单元信息查看<i class="icon-refresh pull-right" onclick="refreshTree();"></i></a>
+		    	<a class="accordion-toggle">套户信息<i class="icon-refresh pull-right" onclick="refreshTree();"></i></a>
 		    </div>
 			<div id="ztree" class="ztree"></div>
 		</div>
@@ -36,7 +36,7 @@
 			callback:{
 				onClick:function(event, treeId, treeNode){
 					var id = treeNode.id == '0' ? '' :treeNode.id;
-					$('#officeContent').attr("src","list?id="+id+"&pids="+(treeNode.pIds==''?id:(treeNode.pIds+","+id)));
+					$('#officeContent').attr("src","list?id="+id+"&taohuIds="+(treeNode.pIds==''?id:(treeNode.pIds+","+id)));
 				}
 			}
 		};

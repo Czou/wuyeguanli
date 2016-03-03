@@ -5,6 +5,7 @@ package com.thinkgem.jeesite.modules.wuyerenyuan.dao;
 
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
+import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.wuyerenyuan.entity.DictRenyuan;
 
 /**
@@ -14,7 +15,7 @@ import com.thinkgem.jeesite.modules.wuyerenyuan.entity.DictRenyuan;
  * @version 2015-12-14
  */
 @MyBatisDao
-public interface DictRenyuanDao extends CrudDao<DictRenyuan> {
+public interface DictRenyuanDao extends CrudDao<User> {
 
 	/**
 	 * 将人从套户内迁出

@@ -25,6 +25,7 @@ import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.wuyejiben.entity.WuyeJiben;
 import com.thinkgem.jeesite.modules.wuyerenyuan.entity.DictRenyuan;
 import com.thinkgem.jeesite.modules.wuyetaohu.entity.DictTaohu;
@@ -128,9 +129,9 @@ public class DictTaohuController extends BaseController {
  */
 	@RequiresPermissions("wuyetaohu:dictTaohu:sale")
 	@RequestMapping(value = "sale")
-	public String sale(DictRenyuan renyuan, Model model, RedirectAttributes redirectAttributes) {
-		renyuan.setRenyuanlx("1");//默认户主
-		dictTaohuService.sale(renyuan.getPid(), renyuan);
+	public String sale(User renyuan, Model model, RedirectAttributes redirectAttributes) {
+		renyuan.setUserType("1");//默认户主
+		dictTaohuService.sale(renyuan.getTaohuId(), renyuan);
 		
 		addMessage(redirectAttributes, "套户销售成功");
 		return "redirect:" + Global.getAdminPath() + "/wuyetaohu/dictTaohu/?repage";

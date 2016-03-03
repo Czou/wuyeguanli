@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
+import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.wuye_heimingd.dao.DictHeimingdDao;
 import com.thinkgem.jeesite.modules.wuye_heimingd.entity.DictHeimingd;
-import com.thinkgem.jeesite.modules.wuyerenyuan.entity.DictRenyuan;
 import com.thinkgem.jeesite.modules.wuyerenyuan.service.DictRenyuanService;
 
 /**
@@ -55,13 +55,12 @@ public class DictHeimingdService extends CrudService<DictHeimingdDao, DictHeimin
 	 * 用于人员选择下拉框
 	 * @return
 	 */
-	public List<DictRenyuan> findRenyuanList() {
-		DictRenyuan ren=new DictRenyuan();
+	public List<User> findRenyuanList() {
+		User ren=new User();
 		ren.setDelFlag("0");
-		ren.setHeimingd("0");//不是黑名单的
-		List<DictRenyuan> list =renyuanService.findList(ren) ;
-		for(DictRenyuan r:list){
-			r.setXingming(r.getPath()+"-"+r.getXingming());
+		List<User> list =renyuanService.findList(ren) ;
+		for(User r:list){
+			r.setName(r.getPath()+"-"+r.getName());
 		}
 		return list;
 	}

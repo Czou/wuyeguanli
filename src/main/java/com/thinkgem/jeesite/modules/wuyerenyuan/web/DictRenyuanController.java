@@ -25,8 +25,8 @@ import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.wuyejiben.entity.WuyeJiben;
-import com.thinkgem.jeesite.modules.wuyerenyuan.entity.DictRenyuan;
 import com.thinkgem.jeesite.modules.wuyerenyuan.service.DictRenyuanService;
 import com.thinkgem.jeesite.modules.wuyetaohu.service.DictTaohuService;
 
@@ -46,13 +46,13 @@ public class DictRenyuanController extends BaseController {
 	private DictTaohuService dictTaohuService;
 
 	@ModelAttribute
-	public DictRenyuan get(@RequestParam(required = false) String id) {
-		DictRenyuan entity = null;
+	public User get(@RequestParam(required = false) String id) {
+		User entity = null;
 		if (StringUtils.isNotBlank(id)) {
 			entity = dictRenyuanService.get(id);
 		}
 		if (entity == null) {
-			entity = new DictRenyuan();
+			entity = new User();
 		}
 		return entity;
 	}
@@ -70,9 +70,9 @@ public class DictRenyuanController extends BaseController {
 
 	@RequiresPermissions("wuyerenyuan:dictRenyuan:view")
 	@RequestMapping(value = { "list", "" })
-	public String list(DictRenyuan dictRenyuan, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<DictRenyuan> page = dictRenyuanService.findPage(new Page<DictRenyuan>(request, response), dictRenyuan);
-		model.addAttribute("pids", dictRenyuan.getPids());
+	public String list(User dictRenyuan, HttpServletRequest request, HttpServletResponse response, Model model) {
+		Page<User> page = dictRenyuanService.findPage(new Page<User>(request, response), dictRenyuan);
+		model.addAttribute("pids", dictRenyuan.getTaohuIds());
 		model.addAttribute("page", page);
 		return "modules/wuyerenyuan/dictRenyuanList";
 	}
@@ -82,25 +82,25 @@ public class DictRenyuanController extends BaseController {
 	 */
 	@RequiresPermissions("wuyerenyuan:dictRenyuan:view")
 	@RequestMapping(value = "searchByTaohuId")
-	public String searchByTaohuId(DictRenyuan dictRenyuan, HttpServletRequest request, Model model) {
+	public String searchByTaohuId(User dictRenyuan, HttpServletRequest request, Model model) {
 		model.addAttribute("userList", dictRenyuanService.findList(dictRenyuan));
 		return "modules/wuyerenyuan/dictRenyuanListByTaohuId";
 	}
 
 	@RequiresPermissions("wuyerenyuan:dictRenyuan:view")
 	@RequestMapping(value = "form")
-	public String form(DictRenyuan dictRenyuan, Model model) {
+	public String form(User dictRenyuan, Model model) {
 		model.addAttribute("dictRenyuan", dictRenyuan);
 		return "modules/wuyerenyuan/dictRenyuanForm";
 	}
 
 	@RequiresPermissions("wuyerenyuan:dictRenyuan:edit")
 	@RequestMapping(value = "save")
-	public String save(DictRenyuan dictRenyuan, Model model, RedirectAttributes redirectAttributes) {
+	public String save(User dictRenyuan, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, dictRenyuan)) {
 			return form(dictRenyuan, model);
 		}
-		dictRenyuan.setPid(dictRenyuan.getPids().split(",")[4]);
+		dictRenyuan.setTaohuId(dictRenyuan.getTaohuIds().split(",")[4]);
 
 		dictRenyuanService.save(dictRenyuan);
 		addMessage(redirectAttributes, "保存住户信息成功");
@@ -109,7 +109,7 @@ public class DictRenyuanController extends BaseController {
 
 	@RequiresPermissions("wuyerenyuan:dictRenyuan:edit")
 	@RequestMapping(value = "delete")
-	public String delete(DictRenyuan dictRenyuan, RedirectAttributes redirectAttributes) {
+	public String delete(User dictRenyuan, RedirectAttributes redirectAttributes) {
 		String path = dictRenyuan.getPath();
 		dictRenyuanService.delete(dictRenyuan);
 		addMessage(redirectAttributes, "删除住户信息成功");

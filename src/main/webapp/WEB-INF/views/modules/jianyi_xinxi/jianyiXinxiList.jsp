@@ -5,9 +5,6 @@
 	<title>建议管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
-		$(document).ready(function() {
-			
-		});
 		function page(n,s){
 			$("#pageNo").val(n);
 			$("#pageSize").val(s);
@@ -19,12 +16,14 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/jianyi_xinxi/jianyiXinxi/">建议列表</a></li>
+		<shiro:hasPermission name="jianyi_xinxi:jianyiXinxi:edit">
+		<li><a href="${ctx}/jianyi_xinxi/jianyiXinxi/form">建议添加</a></li></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="jianyiXinxi" action="${ctx}/jianyi_xinxi/jianyiXinxi/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>创建者：</label>
+			<li><label>建议人：</label>
 				<form:input path="createBy.id" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
@@ -64,7 +63,9 @@
 					<c:if test="${jianyiXinxi.zhuangtai==2}">已处理</c:if>
 				</td>
 				<shiro:hasPermission name="jianyi_xinxi:jianyiXinxi:edit"><td>
-    				<a href="${ctx}/jianyi_xinxi/jianyiXinxi/form?id=${jianyiXinxi.id}">修改</a>
+    				<c:if test="${jianyiXinxi.zhuangtai!=2}">
+    				<a href="${ctx}/jianyi_xinxi/jianyiXinxi/chuli?id=${jianyiXinxi.id}">处理</a>
+    				</c:if>
 					<a href="${ctx}/jianyi_xinxi/jianyiXinxi/delete?id=${jianyiXinxi.id}" onclick="return confirmx('确认要删除该建议吗？', this.href)">删除</a>
 					<a href="${ctx}/jianyi_huifang/jianyiHuifang?xinxiid=${jianyiXinxi.id}">客户回访</a>
 				</td></shiro:hasPermission>

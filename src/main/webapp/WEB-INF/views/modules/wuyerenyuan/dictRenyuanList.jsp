@@ -5,9 +5,6 @@
 	<title>住户信息管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
-		$(document).ready(function() {
-			
-		});
 		function page(n,s){
 			$("#pageNo").val(n);
 			$("#pageSize").val(s);
@@ -18,7 +15,7 @@
 			var pids ='${pids}';
 			//选了套户
 			if(pids.split(',').length==5){
-				window.location.href="${ctx}/wuyerenyuan/dictRenyuan/form?pids="+pids;
+				window.location.href="${ctx}/wuyerenyuan/dictRenyuan/form?taohuIds="+pids;
 			}else
 				alert("请选择套户");
 		}
@@ -32,23 +29,23 @@
 		</shiro:hasPermission>
 	</ul>
 	<input id="path" type="hidden" value="${dictRenyuan.path }" />
-	<form:form id="searchForm" modelAttribute="dictRenyuan" action="${ctx}/wuyerenyuan/dictRenyuan/" method="post" class="breadcrumb form-search">
+	<form:form id="searchForm" modelAttribute="user" action="${ctx}/wuyerenyuan/dictRenyuan/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
 			<li><label>姓名：</label>
-				<form:input path="xingming" htmlEscape="false" maxlength="12" class="input-medium"/>
+				<form:input path="name" htmlEscape="false" maxlength="12" class="input-medium"/>
 			</li>
 			<li><label>人员类型：</label>
-				<form:radiobuttons path="renyuanlx" items="${fns:getDictList('d_zhlx')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				<form:radiobuttons path="yezhulx" items="${fns:getDictList('d_zhlx')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 			</li>
 			<li><label>随身电话：</label>
-				<form:input path="suishendh" htmlEscape="false" maxlength="18" class="input-medium"/>
+				<form:input path="mobile" htmlEscape="false" maxlength="18" class="input-medium"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>
-		<form:hidden path="pids"/>
+		<form:hidden path="taohuIds"/>
 	</form:form>
 	<sys:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
@@ -69,16 +66,16 @@
 					${dictRenyuan.path}
 				</td>
 				<td><a href="${ctx}/wuyerenyuan/dictRenyuan/form?id=${dictRenyuan.id}">
-					${dictRenyuan.xingming}
+					${dictRenyuan.name}
 				</a></td>
 				<td>
-					${fns:getDictLabel(dictRenyuan.xingbie, 'sex', '')}
+					${fns:getDictLabel(dictRenyuan.sex, 'sex', '')}
 				</td>
 				<td>
-					${fns:getDictLabel(dictRenyuan.renyuanlx, 'd_zhlx', '')}
+					${fns:getDictLabel(dictRenyuan.yezhulx, 'd_zhlx', '')}
 				</td>
 				<td>
-					${dictRenyuan.suishendh}
+					${dictRenyuan.mobile}
 				</td>
 				<shiro:hasPermission name="wuyerenyuan:dictRenyuan:edit"><td>
     				<a href="${ctx}/wuyerenyuan/dictRenyuan/form?id=${dictRenyuan.id}">修改</a>

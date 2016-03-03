@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.wuye_gongsi.dao.SysOfficeDao">
+    
+	<sql id="sysOfficeColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.sort AS "sort",
+		a.area_id AS "area.id",
+		a.code AS "code",
+		a.type AS "type",
+		a.grade AS "grade",
+		a.address AS "address",
+		a.renshu AS "renshu",
+		a.zip_code AS "zipCode",
+		a.master AS "master",
+		a.phone AS "phone",
+		a.fax AS "fax",
+		a.email AS "email",
+		a.useable AS "useable",
+		a.primary_person AS "primaryPerson",
+		a.deputy_person AS "deputyPerson",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a6.name AS "area.name"
+	</sql>
+	
+	<sql id="sysOfficeJoins">
+		LEFT JOIN sys_area a6 ON a6.id = a.area_id
+	</sql>
+    
+	<select id="get" resultType="SysOffice">
+		SELECT 
+			<include refid="sysOfficeColumns"/>
+		FROM sys_office a
+		<include refid="sysOfficeJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SysOffice">
+		SELECT 
+			<include refid="sysOfficeColumns"/>
+		FROM sys_office a
+		<include refid="sysOfficeJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} AND a.parent_id=0
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SysOffice">
+		SELECT 
+			<include refid="sysOfficeColumns"/>
+		FROM sys_office a
+		<include refid="sysOfficeJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO sys_office(
+			id,
+			name,
+			address,
+			renshu,
+			zip_code,
+			master,
+			phone,
+			fax,
+			email,
+			useable,
+			primary_person,
+			deputy_person,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			area_id,
+			parent_id
+		) VALUES (
+			#{id},
+			#{name},
+			#{address},
+			#{renshu},
+			#{zipCode},
+			#{master},
+			#{phone},
+			#{fax},
+			#{email},
+			#{useable},
+			#{primaryPerson},
+			#{deputyPerson},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			2,0
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE sys_office SET 	
+			name = #{name},
+			address = #{address},
+			renshu = #{renshu},
+			zip_code = #{zipCode},
+			master = #{master},
+			phone = #{phone},
+			fax = #{fax},
+			email = #{email},
+			useable = #{useable},
+			primary_person = #{primaryPerson},
+			deputy_person = #{deputyPerson},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE sys_office SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

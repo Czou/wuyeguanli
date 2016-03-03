@@ -11,10 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
-import com.thinkgem.jeesite.modules.wuyechewei.entity.DictChewei;
-import com.thinkgem.jeesite.modules.wuyerenyuan.entity.DictRenyuan;
-import com.thinkgem.jeesite.modules.wuyerenyuan.service.DictRenyuanService;
+import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.wuyechewei.dao.DictCheweiDao;
+import com.thinkgem.jeesite.modules.wuyechewei.entity.DictChewei;
+import com.thinkgem.jeesite.modules.wuyerenyuan.service.DictRenyuanService;
 
 /**
  * 车位信息Service
@@ -55,12 +55,12 @@ public class DictCheweiService extends CrudService<DictCheweiDao, DictChewei> {
 	 * 用于人员选择下拉框
 	 * @return
 	 */
-	public List<DictRenyuan> findRenyuanList() {
-		DictRenyuan ren=new DictRenyuan();
+	public List<User> findRenyuanList() {
+		User ren=new User();
 		ren.setDelFlag("0");
-		List<DictRenyuan> list =renyuanService.findList(ren) ;
-		for(DictRenyuan r:list){
-			r.setXingming(r.getPath()+"-"+r.getXingming());
+		List<User> list =renyuanService.findList(ren) ;
+		for(User r:list){
+			r.setName(r.getPath()+"-"+r.getName());
 		}
 		return list;
 	}

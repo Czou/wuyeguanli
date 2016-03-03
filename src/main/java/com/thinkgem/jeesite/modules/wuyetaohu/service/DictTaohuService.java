@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
+import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.wuyejiben.entity.WuyeJiben;
 import com.thinkgem.jeesite.modules.wuyerenyuan.entity.DictRenyuan;
 import com.thinkgem.jeesite.modules.wuyerenyuan.service.DictRenyuanService;
@@ -48,7 +49,7 @@ public class DictTaohuService extends CrudService<DictTaohuDao, DictTaohu> {
 		super.save(dictTaohu);
 	}
 	@Transactional(readOnly = false)
-	public void sale(String taohuId,DictRenyuan renyuan) {
+	public void sale(String taohuId,User renyuan) {
 		taohuDao.sale(taohuId);
 		renyuanService.save(renyuan);
 	}

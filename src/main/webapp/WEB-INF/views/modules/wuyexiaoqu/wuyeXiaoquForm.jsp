@@ -36,7 +36,7 @@
 		<div class="control-group">
 			<label class="control-label">物业公司：</label>
 			<div class="controls">
-				<form:select path="wuye.id" items="${wuyeList }" itemValue="id" itemLabel="mingcheng" class="input-xlarge "></form:select>
+				<form:select path="wuye.id" items="${officeList }" itemValue="id" itemLabel="name" class="input-xlarge "></form:select>
 			</div>
 		</div>
 		<div class="control-group">

@@ -49,7 +49,7 @@
 		<c:forEach items="${page.list}" var="xunjianDict">
 			<tr>
 				<td>
-					<a href="${ctx}/xunjian_jilu/xunjianJilu/form?xunjian.leixing=${xunjianDict.leixing}">${xunjianDict.leixing}</a>
+					<a href="${ctx}/xunjian_dict/xunjianDict/form?id=${xunjianDict.id}">${xunjianDict.leixing}</a>
 				</td>
 				<td><a href="${ctx}/xunjian_dict/xunjianDict/form?id=${xunjianDict.id}">
 					${xunjianDict.mingcheng}
@@ -58,7 +58,7 @@
 					${xunjianDict.shunxu}
 				</td>
 				<shiro:hasPermission name="xunjian_dict:xunjianDict:edit"><td>
-    				<a href="${ctx}/xunjian_dict/xunjianDict/form?id=${xunjianDict.id}">修改</a>
+    				<a href="${ctx}/xunjian_jilu/xunjianJilu/form?xunjian.leixing=${xunjianDict.leixing}">启动</a>
 					<a href="${ctx}/xunjian_dict/xunjianDict/delete?id=${xunjianDict.id}" onclick="return confirmx('确认要删除该巡检点吗？', this.href)">删除</a>
 					<a href="<c:url value='${fns:getAdminPath()}/xunjian_dict/xunjianDict/form?shunxu=${xunjianDict.shunxu+10}'><c:param name='leixing' value='${xunjianDict.leixing}'/></c:url>">添加地点</a>
 					<a href="${ctx}/xunjian_dict/xunjianDict/print?leixing=${xunjianDict.leixing}">打印</a>

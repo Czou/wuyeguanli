@@ -53,12 +53,18 @@ public class JianyiXinxiController extends BaseController {
 		model.addAttribute("page", page);
 		return "modules/jianyi_xinxi/jianyiXinxiList";
 	}
-
 	@RequiresPermissions("jianyi_xinxi:jianyiXinxi:view")
 	@RequestMapping(value = "form")
 	public String form(JianyiXinxi jianyiXinxi, Model model) {
 		model.addAttribute("jianyiXinxi", jianyiXinxi);
 		return "modules/jianyi_xinxi/jianyiXinxiForm";
+	}
+	
+	@RequiresPermissions("jianyi_xinxi:jianyiXinxi:view")
+	@RequestMapping(value = "chuli")
+	public String chuli(JianyiXinxi jianyiXinxi, Model model) {
+		model.addAttribute("jianyiXinxi", jianyiXinxi);
+		return "modules/jianyi_xinxi/jianyiXinxiChuli";
 	}
 
 	@RequiresPermissions("jianyi_xinxi:jianyiXinxi:edit")
