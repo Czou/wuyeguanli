@@ -88,7 +88,7 @@ public class WuyeDanyuanController extends BaseController {
 			WuyeDanyuan danyuan=(WuyeDanyuan) wuyeDanyuan.clone();
 			if(num!=1)
 				danyuan.setMingcheng(i+wuyeDanyuan.getMingcheng());
-			danyuan.setPid(danyuan.getPids().split(",")[2]);
+			danyuan.setPid(danyuan.getPids().split(",")[3]);
 			wuyeDanyuanService.save(danyuan);
 		}
 		addMessage(redirectAttributes, "保存单元信息成功");

@@ -5,9 +5,6 @@
 	<title>楼栋信息管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
-		$(document).ready(function() {
-			
-		});
 		function page(n,s){
 			$("#pageNo").val(n);
 			$("#pageSize").val(s);
@@ -17,7 +14,7 @@
 		function tianjia(){
 			var pids='${pids}';
 			var ids=pids.split(',');
-			if(ids.length==2){
+			if(ids.length==3){
 				window.location.href="${ctx}/loudong/dictLoudong/form?pids=${pids}";
 			}else
 				alert("请选择小区!");
@@ -55,7 +52,6 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th width="200px">位置</th>
 				<th>楼栋名称</th>
 				<th>属地居委会</th>
 				<th>属地派出所</th>
@@ -65,9 +61,6 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="dictLoudong">
 			<tr>
-				<td>
-					${dictLoudong.path}
-				</td>
 				<td><a href="${ctx}/loudong/dictLoudong/form?id=${dictLoudong.id}">
 					${dictLoudong.mingcheng}
 				</a></td>

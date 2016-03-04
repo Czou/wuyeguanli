@@ -36,7 +36,7 @@
 			callback:{
 				onClick:function(event, treeId, treeNode){
 					var id = treeNode.id == '0' ? '' :treeNode.id;
-					$('#officeContent').attr("src","list?id="+id+"&pids="+(treeNode.pIds==''?id:(treeNode.pIds+","+id)));
+					$('#officeContent').attr("src","list?id="+id+"&pids="+(treeNode.pIds==''?id:(treeNode.pIds+id)));
 				}
 			}
 		};

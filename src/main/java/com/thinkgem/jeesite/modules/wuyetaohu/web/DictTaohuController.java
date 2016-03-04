@@ -93,7 +93,7 @@ public class DictTaohuController extends BaseController {
 			DictTaohu taohu = (DictTaohu) dictTaohu.clone();
 			if(chanshengsl!=1)
 				taohu.setMenpai(i + "");
-			taohu.setPid(taohu.getPids().split(",")[3]);
+			taohu.setPid(taohu.getPids().split(",")[4]);
 			dictTaohuService.save(taohu);
 		}
 		addMessage(redirectAttributes, "保存套户成功");
@@ -164,11 +164,7 @@ public class DictTaohuController extends BaseController {
 			map.put("name", wuye.getMingcheng());
 			String imgPath = request.getContextPath()+"/static/jquery-ztree/3.5.12/css/zTreeStyle/img/diy/";
 			switch (Integer.parseInt(wuye.getRenshu())) {
-			case 0:
-				map.put("col", "wuye");
-				map.put("isParent", true);
-				break;
-			case 1:
+			case 1://公司小区
 				map.put("col", "xiaoqu");
 				map.put("isParent", true);
 				break;

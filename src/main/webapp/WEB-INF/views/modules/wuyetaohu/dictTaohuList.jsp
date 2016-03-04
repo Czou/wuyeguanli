@@ -20,7 +20,7 @@
 			var pids='${pids}';
 			//选了单元
 			var ids=pids.split(',');
-			if(ids.length==4){
+			if(ids.length==5){
 				window.location.href="${ctx}/wuyetaohu/dictTaohu/form?pids=${pids}";
 			}else
 				$('checkbox [name=]').attr("checked",true);

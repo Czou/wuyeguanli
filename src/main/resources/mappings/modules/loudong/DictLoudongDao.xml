@@ -5,7 +5,6 @@
 	<sql id="dictLoudongColumns">
 		a.id AS "id",
 		a.mingcheng AS "mingcheng",
-		CONCAT(c.mingcheng,'-',b.mingcheng) AS "path",
 		a.pids AS "pids",
 		a.chaoxiang AS "chaoxiang",
 		a.cenggao AS "cenggao",
@@ -23,8 +22,6 @@
 	</sql>
 	
 	<sql id="dictLoudongJoins">
-		LEFT JOIN wuye_jichu b ON b.id=a.pid
-		LEFT JOIN wuye_jichu c ON c.id=b.pid
 	</sql>
     
 	<select id="get" resultType="DictLoudong">

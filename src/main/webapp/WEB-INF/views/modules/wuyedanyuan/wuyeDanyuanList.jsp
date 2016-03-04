@@ -5,9 +5,6 @@
 	<title>单元信息管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
-		$(document).ready(function() {
-			
-		});
 		function page(n,s){
 			$("#pageNo").val(n);
 			$("#pageSize").val(s);
@@ -17,7 +14,7 @@
 		function tianjia(){
 			var pids='${pids}';
 			var ids=pids.split(',');
-			if(ids.length==3){
+			if(ids.length==4){
 				window.location.href="${ctx}/wuyedanyuan/wuyeDanyuan/form?pids=${pids}";
 			}else
 				alert("请选择楼栋号!");
@@ -35,7 +32,7 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th width="250px">位置</th>
+				<th width="250px">楼栋</th>
 				<th>名称</th>
 				<shiro:hasPermission name="wuyedanyuan:wuyeDanyuan:edit"><th>操作</th></shiro:hasPermission>
 			</tr>

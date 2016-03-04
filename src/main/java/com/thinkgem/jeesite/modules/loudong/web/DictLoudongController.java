@@ -91,7 +91,7 @@ public class DictLoudongController extends BaseController {
 			if(num!=1){
 				lou.setMingcheng(i+dictLoudong.getMingcheng());
 			}
-			lou.setPid(lou.getPids().split(",")[1]);
+			lou.setPid(lou.getPids().split(",")[2]);
 			dictLoudongService.save(lou);
 		}
 		addMessage(redirectAttributes, "保存楼栋信息成功");

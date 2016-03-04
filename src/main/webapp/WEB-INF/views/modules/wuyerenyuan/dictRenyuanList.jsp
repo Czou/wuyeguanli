@@ -14,7 +14,7 @@
 		function formPage(){
 			var pids ='${pids}';
 			//选了套户
-			if(pids.split(',').length==5){
+			if(pids.split(',').length==6){
 				window.location.href="${ctx}/wuyerenyuan/dictRenyuan/form?taohuIds="+pids;
 			}else
 				alert("请选择套户");

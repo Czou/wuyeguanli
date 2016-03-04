@@ -100,7 +100,7 @@ public class DictRenyuanController extends BaseController {
 		if (!beanValidator(model, dictRenyuan)) {
 			return form(dictRenyuan, model);
 		}
-		dictRenyuan.setTaohuId(dictRenyuan.getTaohuIds().split(",")[4]);
+		dictRenyuan.setTaohuId(dictRenyuan.getTaohuIds().split(",")[5]);
 
 		dictRenyuanService.save(dictRenyuan);
 		addMessage(redirectAttributes, "保存住户信息成功");
