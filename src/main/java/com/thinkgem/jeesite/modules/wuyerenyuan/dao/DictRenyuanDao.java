@@ -3,6 +3,8 @@
  */
 package com.thinkgem.jeesite.modules.wuyerenyuan.dao;
 
+import java.util.List;
+
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.sys.entity.User;
@@ -38,4 +40,10 @@ public interface DictRenyuanDao extends CrudDao<User> {
 	 * @return
 	 */
 	DictRenyuan getRenyuanByNum(String num);
+	/**
+	 * 查询部门与人员
+	 * @param companyId
+	 * @return
+	 */
+	public List<User> getRenyuanByCompanyId(String companyId);
 }

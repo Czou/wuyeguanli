@@ -1,5 +1,6 @@
 package com.thinkgem.jeesite.modules.mobile;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,5 +31,11 @@ public class MobileController extends BaseController{
 			map.put("name",ren.getXingming());
 		}
 		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "getRenyuanByCompanyId")
+	public List<Map<String, Object>> getRenyuanByCompanyId(HttpServletRequest request) {
+		return renyuanService.getRenyuanByCompanyId(request.getParameter("companyId"));
 	}
 }

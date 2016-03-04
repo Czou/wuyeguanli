@@ -117,11 +117,11 @@ public class DictTaohuController extends BaseController {
 	 */
 	@RequiresPermissions("wuyetaohu:dictTaohu:sale")
 	@RequestMapping(value = "turnToSale")
-	public String turnToSale(DictRenyuan dictRenyuan,DictTaohu taohu, Model model) {
+	public String turnToSale(User user,DictTaohu taohu, Model model) {
 		model.addAttribute("dictTaohu", taohu);
-		dictRenyuan.setPid(taohu.getId());
-		dictRenyuan.setPids(taohu.getPids()+","+taohu.getId());
-		model.addAttribute("dictRenyuan", dictRenyuan);
+		user.setTaohuId(taohu.getId());
+		user.setTaohuIds(taohu.getPids()+","+taohu.getId());
+		model.addAttribute("user", user);
 		return "modules/wuyetaohu/saleIndex";
 	}
 /**

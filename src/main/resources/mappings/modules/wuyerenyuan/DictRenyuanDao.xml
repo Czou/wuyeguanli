@@ -102,6 +102,17 @@
 		</where>		
 	</select>
 	
+	<select id="getRenyuanByCompanyId" resultType="User">
+		SELECT 
+			u.id,
+			u.name,
+			u.phone,
+			o.name AS "office.name"
+		FROM sys_user u , sys_office o
+		WHERE	u.office_id=o.id
+		AND o.parent_ids like concat('%,',#{companyId},',%')
+	</select>
+	
 	<insert id="insert">
 		INSERT INTO sys_user(
 			id,
